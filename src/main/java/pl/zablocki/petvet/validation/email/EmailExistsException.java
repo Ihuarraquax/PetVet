@@ -1,0 +1,8 @@
+package pl.zablocki.petvet.validation.email;
+
+public class EmailExistsException extends Throwable {
+
+    public EmailExistsException(String message) {
+        super(message);
+    }
+}
