@@ -1,21 +1,14 @@
-package pl.zablocki.petvet.entity;
+package pl.zablocki.petvet.entity.dto;
 
-import pl.zablocki.petvet.validation.password.PasswordMatches;
 import pl.zablocki.petvet.validation.email.ValidEmail;
 import pl.zablocki.petvet.validation.email.ValidEmailUnique;
+import pl.zablocki.petvet.validation.password.PasswordMatches;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @PasswordMatches
 public class UserDto {
-    @NotNull
-    @NotEmpty
-    private String firstName;
-
-    @NotNull
-    @NotEmpty
-    private String lastName;
 
     @NotNull
     @NotEmpty
@@ -28,22 +21,6 @@ public class UserDto {
     @NotNull
     @NotEmpty
     private String email;
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
 
     public String getPassword() {
         return password;

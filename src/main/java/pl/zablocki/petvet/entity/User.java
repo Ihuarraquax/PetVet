@@ -1,6 +1,8 @@
 package pl.zablocki.petvet.entity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
@@ -9,10 +11,8 @@ public class User {
     @Id
     String email;
     String password;
-    String firstName;
-    String lastName;
-    boolean enabled;
 
+    boolean enabled;
 
     public String getEmail() {
         return email;
@@ -28,22 +28,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public boolean isEnabled() {

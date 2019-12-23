@@ -2,14 +2,23 @@
 <body>
 <div th:replace="fragments/header"></div>
 <h1>form</h1>
-<form action="/registration" th:object="${user}" method="POST">
+<form action="/user/edit" th:object="${user}" method="POST">
     <div th:errors="${user}">...</div>
+
+    EDIT CREDENTIALS
     <div>
-        <label>email</label>
-        <input type="email" th:field="*{email}"/>
-        <p th:each="error : ${#fields.errors('email')}"
+        <label>first</label>
+        <input th:field="*{firstName}"/>
+        <p th:each="error: ${#fields.errors('firstName')}"
            th:text="${error}">Validation error</p>
     </div>
+    <div>
+        <label>last</label>
+        <input th:field="*{lastName}"/>
+        <p th:each="error : ${#fields.errors('lastName')}"
+           th:text="${error}">Validation error</p>
+    </div><BR>
+    EDIT PASSWORD
     <div>
         <label>password</label>
         <input type="password" th:field="*{password}"/>
@@ -20,6 +29,8 @@
         <label >confirm</label>
         <input type="password" th:field="*{matchingPassword}"/>
     </div>
+
+    <input type="hidden" th:field="*{email}"/>
     <button type="submit">submit</button>
 </form>
 

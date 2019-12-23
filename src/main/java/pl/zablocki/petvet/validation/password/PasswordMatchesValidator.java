@@ -1,6 +1,6 @@
 package pl.zablocki.petvet.validation.password;
 
-import pl.zablocki.petvet.entity.UserDto;
+import pl.zablocki.petvet.entity.dto.UserDto;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

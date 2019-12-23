@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import pl.zablocki.petvet.entity.Authority;
-import pl.zablocki.petvet.entity.UserDto;
+import pl.zablocki.petvet.entity.dto.UserDto;
 import pl.zablocki.petvet.services.AuthorityService;
 import pl.zablocki.petvet.services.UserService;
 
