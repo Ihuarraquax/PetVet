@@ -6,7 +6,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <!-- Material Design Bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.11/css/mdb.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" th:href="@{styles.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/styles.css}"/>
 </head>
 <body>
 <div th:fragment="header">
@@ -32,7 +32,7 @@
                 </ul>
 
                 <ul class="nav navbar-nav nav-flex-icons ml-auto">
-                    <div sec:authorize="isAuthenticated()">
+                    <div sec:authorize="hasAuthority('ROLE_USER')">
                         <a class="nav-link" href="/pets">Moje zwierzęta</a>
                         <a class="nav-link" href="/appointments">Wizyty</a>
                     </div>

@@ -44,7 +44,6 @@ public class RegistrationController {
     }
 
     private void createUserAccount(UserDto accountDto) {
-
         Authority authority = new Authority();
         authority.setAuthority("ROLE_USER");
         authority.setEmail(accountDto.getEmail());
