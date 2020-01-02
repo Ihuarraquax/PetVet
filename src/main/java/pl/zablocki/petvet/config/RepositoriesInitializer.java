@@ -4,18 +4,26 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import pl.zablocki.petvet.entity.Pet;
 import pl.zablocki.petvet.entity.PetType;
+import pl.zablocki.petvet.entity.User;
 import pl.zablocki.petvet.repository.PetTypeRepository;
+import pl.zablocki.petvet.services.PetService;
+import pl.zablocki.petvet.services.UserService;
 
 @Configuration
 public class RepositoriesInitializer {
 
 
     private final PetTypeRepository petTypeRepository;
+    private final PetService petService;
+    private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
-    public RepositoriesInitializer(PetTypeRepository petTypeRepository, PasswordEncoder passwordEncoder) {
+    public RepositoriesInitializer(PetTypeRepository petTypeRepository, PetService petService, UserService userService, PasswordEncoder passwordEncoder) {
         this.petTypeRepository = petTypeRepository;
+        this.petService = petService;
+        this.userService = userService;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -41,6 +49,31 @@ public class RepositoriesInitializer {
                 petTypeRepository.save(parrot);
                 petTypeRepository.save(rabbit);
                 petTypeRepository.save(guineaPig);
+            }
+
+            if (petService.findAll().isEmpty()){
+
+                User zablo = userService.getUserByEmail("zablo432432@o2.pl");
+                PetType dog = petTypeRepository.findOneByName("Dog").get();
+                PetType cat = petTypeRepository.findOneByName("Cat").get();
+                Pet fiflak = new Pet();
+                fiflak.setName("Fifi");
+                fiflak.setOwner(zablo);
+                fiflak.setAge(12);
+                fiflak.setSex("Female");
+                fiflak.setType(dog);
+                fiflak.setBreed("Kundel");
+
+                Pet kitler = new Pet();
+                kitler.setName("Kitler");
+                kitler.setOwner(zablo);
+                kitler.setAge(666);
+                kitler.setSex("Male");
+                kitler.setType(cat);
+                kitler.setBreed("Szatan");
+
+                petService.addPet(fiflak);
+                petService.addPet(kitler);
             }
         };
     }

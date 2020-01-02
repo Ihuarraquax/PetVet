@@ -8,12 +8,14 @@ public class Pet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String breed;
     @ManyToOne
     private PetType type;
     private String sex;
     private int age;
     @ManyToOne
     private User owner;
+
 
     public Long getId() {
         return id;
@@ -29,6 +31,14 @@ public class Pet {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getBreed() {
+        return breed;
+    }
+
+    public void setBreed(String breed) {
+        this.breed = breed;
     }
 
     public PetType getType() {

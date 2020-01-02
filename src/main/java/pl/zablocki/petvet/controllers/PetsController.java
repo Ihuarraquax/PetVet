@@ -30,7 +30,8 @@ public class PetsController {
     }
 
     @GetMapping()
-    public String indexPage() {
+    public String showPetsList(Model model, Principal principal) {
+        model.addAttribute("myPets", petService.getUserPets(principal.getName()));
         return "pets";
     }
 
@@ -45,9 +46,7 @@ public class PetsController {
         if(errors.hasErrors()){
             return "petForm";
         }
-
         petService.addPet(pet, principal.getName());
-
         return "redirect:/pets";
     }
 

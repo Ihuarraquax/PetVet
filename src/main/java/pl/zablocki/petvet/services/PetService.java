@@ -26,10 +26,26 @@ public class PetService {
         return petTypeRepository.findAll();
     }
 
-    public void addPet(Pet pet, String email) {
+    public void addPet(Pet pet) {
+        petRepository.saveAndFlush(pet);
+    }
 
+    public void addPet(Pet pet, String email) {
         User owner = userService.getUserByEmail(email);
         pet.setOwner(owner);
         petRepository.saveAndFlush(pet);
+    }
+
+    public List<Pet> getAllPets() {
+        return petRepository.findAll();
+    }
+
+    public List<Pet> getUserPets(String email) {
+        User owner = userService.getUserByEmail(email);
+        return petRepository.findAllByOwner(owner);
+    }
+
+    public List<Pet> findAll() {
+        return petRepository.findAll();
     }
 }
