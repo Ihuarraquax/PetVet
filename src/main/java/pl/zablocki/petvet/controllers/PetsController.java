@@ -42,8 +42,8 @@ public class PetsController {
     }
 
     @PostMapping("add")
-    public String addPet(@ModelAttribute("pet") Pet pet, BindingResult errors, Principal principal){
-        if(errors.hasErrors()){
+    public String addPet(@ModelAttribute("pet") Pet pet, BindingResult errors, Principal principal) {
+        if (errors.hasErrors()) {
             return "petForm";
         }
         petService.addPet(pet, principal.getName());

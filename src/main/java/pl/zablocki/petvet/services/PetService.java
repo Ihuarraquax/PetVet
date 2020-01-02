@@ -15,12 +15,12 @@ public class PetService {
     private final PetTypeRepository petTypeRepository;
     private final UserService userService;
     private final PetRepository petRepository;
+
     public PetService(PetTypeRepository petTypeRepository, UserService userService, PetRepository petRepository) {
         this.petTypeRepository = petTypeRepository;
         this.userService = userService;
         this.petRepository = petRepository;
     }
-
 
     public List<PetType> getPetTypes() {
         return petTypeRepository.findAll();
@@ -34,10 +34,6 @@ public class PetService {
         User owner = userService.getUserByEmail(email);
         pet.setOwner(owner);
         petRepository.saveAndFlush(pet);
-    }
-
-    public List<Pet> getAllPets() {
-        return petRepository.findAll();
     }
 
     public List<Pet> getUserPets(String email) {

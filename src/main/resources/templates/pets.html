@@ -23,21 +23,21 @@
     <tbody>
     <tr th:each="pet : ${myPets}">
         <td>
-            <a th:href="@{/pets(id=${pet.id})}">
-                <span th:text="${pet.name}"></span>
+            <a th:href="@{/pets(id=*{pet.id})}">
+                <span th:text="*{pet.name}"></span>
             </a>
         </td>
         <td>
-            <span th:text="${pet.type.name}"></span>
+            <span th:text="*{pet.type.name}"></span>
         </td>
         <td>
-            <span th:text="${pet.breed}"></span>
+            <span th:text="*{pet.breed}"></span>
         </td>
         <td>
-            <span th:text="${pet.age}"></span>
+            <span th:text="*{pet.age}"></span>
         </td>
         <td>
-            <span th:text="${pet.sex}"></span>
+            <span th:text="*{pet.sex}"></span>
         </td>
     </tr>
 
