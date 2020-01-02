@@ -15,15 +15,14 @@ import pl.zablocki.petvet.services.PetService;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping("/pets")
 @Controller
 public class PetsController {
 
     private final PetService petService;
-
     private static final Logger log = LoggerFactory.getLogger(PetsController.class);
-
 
     public PetsController(PetService petService) {
         this.petService = petService;
@@ -35,24 +34,32 @@ public class PetsController {
         return "pets";
     }
 
-    @GetMapping("add")
-    public String showPetForm(Model model) {
-        model.addAttribute(new Pet());
-        return "petForm";
-    }
 
-    @PostMapping("add")
-    public String addPet(@ModelAttribute("pet") Pet pet, BindingResult errors, Principal principal) {
+
+    @PostMapping("form")
+    public String savePet(@ModelAttribute("pet") Pet pet, BindingResult errors, Principal principal) {
         if (errors.hasErrors()) {
             return "petForm";
         }
-        petService.addPet(pet, principal.getName());
+
+        petService.savePet(pet, principal.getName());
         return "redirect:/pets";
     }
 
+    @GetMapping("form")
+    public String showPetForm(Optional<Long> id, Model model) {
+
+        model.addAttribute(
+                "pet",
+                id.isPresent() ? petService.getPet(id.get()).get() : new Pet());
+
+        return "petForm";
+    }
 
     @ModelAttribute(name = "petTypes")
     public List<PetType> getPetTypesAndAddToModel() {
         return petService.getPetTypes();
     }
+
+
 }

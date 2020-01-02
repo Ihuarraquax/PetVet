@@ -32,6 +32,11 @@ public class RepositoriesInitializer {
     InitializingBean init() {
 
         return () -> {
+
+            if(!userService.getUserByEmail("zablo432432@o2.pl").isPresent()){
+                userService.createUserAccount("zablo432432@o2.pl", "123");
+            }
+
             if (petTypeRepository.findAll().isEmpty()) {
                 PetType dog = new PetType();
                 dog.setName("Dog");
@@ -53,7 +58,7 @@ public class RepositoriesInitializer {
 
             if (petService.findAll().isEmpty()){
 
-                User zablo = userService.getUserByEmail("zablo432432@o2.pl");
+                User zablo = userService.getUserByEmail("zablo432432@o2.pl").get();
                 PetType dog = petTypeRepository.findOneByName("Dog").get();
                 PetType cat = petTypeRepository.findOneByName("Cat").get();
                 Pet fiflak = new Pet();
@@ -72,8 +77,8 @@ public class RepositoriesInitializer {
                 kitler.setType(cat);
                 kitler.setBreed("Szatan");
 
-                petService.addPet(fiflak);
-                petService.addPet(kitler);
+                petService.savePet(fiflak);
+                petService.savePet(kitler);
             }
         };
     }

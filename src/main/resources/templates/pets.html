@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" type="text/css" href="../static/styles.css"/>
     <meta charset="UTF-8">
     <title>PetVet - Strona główna</title>
 
@@ -18,6 +19,7 @@
         <th>Rasa</th>
         <th>Wiek</th>
         <th>Płeć</th>
+        <th>Opcje</th>
     </tr>
     </thead>
     <tbody>
@@ -39,11 +41,17 @@
         <td>
             <span th:text="*{pet.sex}"></span>
         </td>
+        <td>
+            <a th:href="@{/pets/form(id=*{pet.id})}">
+                <img class="click-icon" th:src="@{/images/edit-flat.png}" alt="edit-icon">
+            </a>
+        </td>
+
+
     </tr>
 
     </tbody>
 </table>
-
 
 
 <a href="/pets/add">Dodaj pupila</a>

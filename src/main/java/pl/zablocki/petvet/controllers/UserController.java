@@ -49,7 +49,7 @@ public class UserController {
     }
 
     private UserDto getActiveUserDto(String email) {
-        User user = userService.getUserByEmail(email);
+        User user = userService.getUserByEmail(email).get();
         return userService.convertToDto(user);
     }
 
