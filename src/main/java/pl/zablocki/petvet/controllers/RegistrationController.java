@@ -8,17 +8,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import pl.zablocki.petvet.entity.dto.UserDto;
-import pl.zablocki.petvet.services.UserService;
+import pl.zablocki.petvet.services.AccountService;
 
 import javax.validation.Valid;
 
 @Controller
 public class RegistrationController {
 
-    private UserService userService;
+    private AccountService accountService;
 
-    public RegistrationController(UserService userService) {
-        this.userService = userService;
+    public RegistrationController(AccountService accountService) {
+        this.accountService = accountService;
     }
 
     @GetMapping(path = "/registration")
@@ -34,7 +34,7 @@ public class RegistrationController {
         if (result.hasErrors()) {
             return new ModelAndView("registration", "user", accountDto);
         } else {
-            userService.createUserAccount(accountDto.getEmail(),accountDto.getPassword());
+            accountService.createUserAccount(accountDto.getEmail(),accountDto.getPassword());
             return new ModelAndView("login", "user", accountDto);
         }
     }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import pl.zablocki.petvet.entity.User;
 import pl.zablocki.petvet.entity.dto.UserDto;
-import pl.zablocki.petvet.services.UserService;
+import pl.zablocki.petvet.services.AccountService;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -18,11 +18,11 @@ import java.security.Principal;
 @Controller
 public class UserController {
 
-    private UserService userService;
+    private AccountService accountService;
 
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public UserController(AccountService accountService) {
+        this.accountService = accountService;
     }
 
     @GetMapping(path = "/user")
@@ -43,14 +43,14 @@ public class UserController {
             return new ModelAndView("userEdit", "user", userDto);
 
         } else {
-            userService.updateUser(userDto);
+            accountService.updateUser(userDto);
             return new ModelAndView("redirect:/user");
         }
     }
 
     private UserDto getActiveUserDto(String email) {
-        User user = userService.getUserByEmail(email).get();
-        return userService.convertToDto(user);
+        User user = accountService.getUserByEmail(email).get();
+        return accountService.convertToDto(user);
     }
 
 

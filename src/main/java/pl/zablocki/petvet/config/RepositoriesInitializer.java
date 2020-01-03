@@ -7,9 +7,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import pl.zablocki.petvet.entity.Pet;
 import pl.zablocki.petvet.entity.PetType;
 import pl.zablocki.petvet.entity.User;
+import pl.zablocki.petvet.model.Credentials;
 import pl.zablocki.petvet.repository.PetTypeRepository;
+import pl.zablocki.petvet.services.AccountService;
 import pl.zablocki.petvet.services.PetService;
-import pl.zablocki.petvet.services.UserService;
+
+import java.time.LocalDate;
 
 @Configuration
 public class RepositoriesInitializer {
@@ -17,13 +20,13 @@ public class RepositoriesInitializer {
 
     private final PetTypeRepository petTypeRepository;
     private final PetService petService;
-    private final UserService userService;
+    private final AccountService accountService;
     private final PasswordEncoder passwordEncoder;
 
-    public RepositoriesInitializer(PetTypeRepository petTypeRepository, PetService petService, UserService userService, PasswordEncoder passwordEncoder) {
+    public RepositoriesInitializer(PetTypeRepository petTypeRepository, PetService petService, AccountService accountService, PasswordEncoder passwordEncoder) {
         this.petTypeRepository = petTypeRepository;
         this.petService = petService;
-        this.userService = userService;
+        this.accountService = accountService;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -33,8 +36,12 @@ public class RepositoriesInitializer {
 
         return () -> {
 
-            if(!userService.getUserByEmail("zablo432432@o2.pl").isPresent()){
-                userService.createUserAccount("zablo432432@o2.pl", "123");
+            if(!accountService.getUserByEmail("zablo432432@o2.pl").isPresent()){
+                accountService.createUserAccount("zablo432432@o2.pl", "123");
+            }
+            if(!accountService.getVetByEmail("vet@o2.pl").isPresent()){
+                accountService.createVetAccount("vet@o2.pl", "123");
+                accountService.setCredentialsForVet("vet@o2.pl", new Credentials("Jan", "Nowak", LocalDate.now().minusYears(53)));
             }
 
             if (petTypeRepository.findAll().isEmpty()) {
@@ -58,7 +65,7 @@ public class RepositoriesInitializer {
 
             if (petService.findAll().isEmpty()){
 
-                User zablo = userService.getUserByEmail("zablo432432@o2.pl").get();
+                User zablo = accountService.getUserByEmail("zablo432432@o2.pl").get();
                 PetType dog = petTypeRepository.findOneByName("Dog").get();
                 PetType cat = petTypeRepository.findOneByName("Cat").get();
                 Pet fiflak = new Pet();

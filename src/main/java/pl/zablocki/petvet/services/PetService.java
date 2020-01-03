@@ -14,12 +14,12 @@ import java.util.Optional;
 public class PetService {
 
     private final PetTypeRepository petTypeRepository;
-    private final UserService userService;
+    private final AccountService accountService;
     private final PetRepository petRepository;
 
-    public PetService(PetTypeRepository petTypeRepository, UserService userService, PetRepository petRepository) {
+    public PetService(PetTypeRepository petTypeRepository, AccountService accountService, PetRepository petRepository) {
         this.petTypeRepository = petTypeRepository;
-        this.userService = userService;
+        this.accountService = accountService;
         this.petRepository = petRepository;
     }
 
@@ -33,14 +33,14 @@ public class PetService {
 
     public void savePet(Pet pet, String email) {
         if (pet.getOwner() == null) {
-            User owner = userService.getUserByEmail(email).get();
+            User owner = accountService.getUserByEmail(email).get();
             pet.setOwner(owner);
         }
         petRepository.saveAndFlush(pet);
     }
 
     public List<Pet> getUserPets(String email) {
-        User owner = userService.getUserByEmail(email).get();
+        User owner = accountService.getUserByEmail(email).get();
         return petRepository.findAllByOwner(owner);
     }
 
