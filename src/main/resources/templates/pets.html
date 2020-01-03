@@ -19,6 +19,7 @@
         <th>Rasa</th>
         <th>Wiek</th>
         <th>Płeć</th>
+        <th>Zdjęcie</th>
         <th>Opcje</th>
     </tr>
     </thead>
@@ -42,6 +43,10 @@
             <span th:text="*{pet.sex}"></span>
         </td>
         <td>
+
+            <img class="photo" th:if="${pet.image} != null" th:src="'/photos/' + *{pet.image}" alt="photo">
+        </td>
+        <td>
             <a th:href="@{/pets/form(id=*{pet.id})}">
                 <img class="click-icon" th:src="@{/images/edit-flat.png}" alt="edit-icon">
             </a>
@@ -54,7 +59,7 @@
 </table>
 
 
-<a href="/pets/add">Dodaj pupila</a>
+<a href="/pets/form">Dodaj pupila</a>
 
 
 <div th:replace="fragments/footer"></div>

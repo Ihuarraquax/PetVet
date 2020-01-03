@@ -15,7 +15,7 @@ public class Pet {
     private int age;
     @ManyToOne
     private User owner;
-
+    private String image;
 
     public Long getId() {
         return id;
@@ -71,5 +71,13 @@ public class Pet {
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
