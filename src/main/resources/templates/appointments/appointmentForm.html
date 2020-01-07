@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>PetVet - Strona główna</title>
+
+</head>
+<body>
+<div th:replace="fragments/header"></div>
+
+
+<div>
+    <h1>Dodawanie/Edycja</h1>
+    <form th:method="POST" th:object="${appointment}" enctype="multipart/form-data">
+        <div>
+            <label for="name" class="bmd-label-floating">Nazwa:</label>
+            <input id="name" type="text" name="name" th:value="*{name}"
+                   class="form-control" th:classappend="${#fields.hasErrors('name')}?'is-invalid'"
+                   required="true" autofocus="true"/>
+
+            <div class="error text-danger" th:if="${#fields.hasErrors('name')}">
+                <span th:each="err : ${#fields.errors('name')}" th:text="${err}"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="type" class="bmd-label-floating">Typ pupila</label>
+            <select id="type" th:field="*{type.id}" class="form-control"
+                    th:classappend="${#fields.hasErrors('type.id')}?'is-invalid'">
+                <option th:each="type : ${petTypes}"
+                        th:value="${type.id}"
+                        th:text=" ${type.name}"></option>
+            </select>
+            <div class="error text-danger" th:if="${#fields.hasErrors('type.id')}">
+                <p th:each="err : ${#fields.errors('type.id')}" th:text="${err}"></p>
+            </div>
+        </div>
+        <div>
+            <label for="breed" class="bmd-label-floating">Rasa:</label>
+            <input id="breed" type="text" name="breed" th:value="*{breed}"
+                   class="form-control" th:classappend="${#fields.hasErrors('breed')}?'is-invalid'"
+                   required="true" autofocus="true"/>
+
+            <div class="error text-danger" th:if="${#fields.hasErrors('breed')}">
+                <span th:each="err : ${#fields.errors('breed')}" th:text="${err}"></span>
+            </div>
+        </div>
+        <div>
+            <label class="bmd-label-floating">Płeć:</label>
+            </br>Samiec:
+            <input type="radio" name="sex" th:field="*{sex}" th:value="Male"/>
+            </br>Samica:
+            <input type="radio" name="sex" th:field="*{sex}" th:value="Female"/>
+
+        </div>
+
+        <div>
+            <label for="age" class="bmd-label-floating">Wiek:</label>
+            <input id="age" type="number" name="age" th:value="*{age}"
+                   class="form-control" th:classappend="${#fields.hasErrors('age')}?'is-invalid'"
+                   required="true" autofocus="true"/>
+
+            <div class="error text-danger" th:if="${#fields.hasErrors('age')}">
+                <span th:each="err : ${#fields.errors('age')}" th:text="${err}"></span>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-raised">Zapisz</button>
+    </form>
+
+
+</div>
+
+
+<div th:replace="fragments/footer"></div>
+
+</body>
+</html>

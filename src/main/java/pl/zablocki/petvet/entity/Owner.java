@@ -18,4 +18,46 @@ public class Owner {
     @OneToMany
     private List<Pet> pets;
 
+    public Owner() {
+    }
+
+    public Owner(User user, Credentials credentials) {
+        this.user = user;
+        this.credentials = credentials;
+    }
+
+    public void addPet(Pet pet) {
+        pets.add(pet);
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Credentials getCredentials() {
+        return credentials;
+    }
+
+    public void setCredentials(Credentials credentials) {
+        this.credentials = credentials;
+    }
+
+    public List<Pet> getPets() {
+        return pets;
+    }
+    public void setPets(List<Pet> pets) {
+        this.pets = pets;
+    }
 }

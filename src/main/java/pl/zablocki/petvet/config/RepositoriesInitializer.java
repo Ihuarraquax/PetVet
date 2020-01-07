@@ -4,6 +4,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import pl.zablocki.petvet.entity.Owner;
 import pl.zablocki.petvet.entity.Pet;
 import pl.zablocki.petvet.entity.PetType;
 import pl.zablocki.petvet.entity.User;
@@ -13,6 +14,7 @@ import pl.zablocki.petvet.services.AccountService;
 import pl.zablocki.petvet.services.PetService;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Configuration
 public class RepositoriesInitializer {
@@ -36,8 +38,9 @@ public class RepositoriesInitializer {
 
         return () -> {
 
-            if(!accountService.getUserByEmail("zablo432432@o2.pl").isPresent()){
-                accountService.createUserAccount("zablo432432@o2.pl", "123");
+            if(!accountService.getOwnerByEmail("zablo432432@o2.pl").isPresent()){
+                accountService.createOwnerAccount("zablo432432@o2.pl", "123");
+                Optional<Owner> zablo432432 = accountService.getOwnerByEmail("zablo432432@o2.pl");
             }
             if(!accountService.getVetByEmail("vet@o2.pl").isPresent()){
                 accountService.createVetAccount("vet@o2.pl", "123");
