@@ -1,9 +1,9 @@
 package pl.zablocki.petvet.services;
 
 import org.springframework.stereotype.Service;
+import pl.zablocki.petvet.entity.Owner;
 import pl.zablocki.petvet.entity.Pet;
 import pl.zablocki.petvet.entity.PetType;
-import pl.zablocki.petvet.entity.User;
 import pl.zablocki.petvet.repository.PetRepository;
 import pl.zablocki.petvet.repository.PetTypeRepository;
 
@@ -33,14 +33,14 @@ public class PetService {
 
     public void savePet(Pet pet, String email) {
         if (pet.getOwner() == null) {
-            User owner = accountService.getUserByEmail(email).get();
+            Owner owner = accountService.getOwnerByEmail(email).get();
             pet.setOwner(owner);
         }
         petRepository.saveAndFlush(pet);
     }
 
-    public List<Pet> getUserPets(String email) {
-        User owner = accountService.getUserByEmail(email).get();
+    public List<Pet> getOwnerPets(String email) {
+        Owner owner = accountService.getOwnerByEmail(email).get();
         return petRepository.findAllByOwner(owner);
     }
 

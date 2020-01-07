@@ -7,7 +7,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import pl.zablocki.petvet.entity.Owner;
 import pl.zablocki.petvet.entity.Pet;
 import pl.zablocki.petvet.entity.PetType;
-import pl.zablocki.petvet.entity.User;
 import pl.zablocki.petvet.model.Credentials;
 import pl.zablocki.petvet.repository.PetTypeRepository;
 import pl.zablocki.petvet.services.AccountService;
@@ -68,7 +67,7 @@ public class RepositoriesInitializer {
 
             if (petService.findAll().isEmpty()){
 
-                User zablo = accountService.getUserByEmail("zablo432432@o2.pl").get();
+                Owner zablo = accountService.getOwnerByEmail("zablo432432@o2.pl").get();
                 PetType dog = petTypeRepository.findOneByName("Dog").get();
                 PetType cat = petTypeRepository.findOneByName("Cat").get();
                 Pet fiflak = new Pet();

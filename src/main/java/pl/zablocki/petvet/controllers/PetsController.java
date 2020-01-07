@@ -31,7 +31,7 @@ public class PetsController {
 
     @GetMapping()
     public String showPetsList(Model model, Principal principal) {
-        model.addAttribute("myPets", petService.getUserPets(principal.getName()));
+        model.addAttribute("myPets", petService.getOwnerPets(principal.getName()));
         return "pets";
     }
 
