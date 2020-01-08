@@ -3,6 +3,7 @@ package pl.zablocki.petvet.entity;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "pet")
 public class Pet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,6 +15,7 @@ public class Pet {
     private String sex;
     private int age;
     @ManyToOne
+    @JoinColumn(name = "owner_id")
     private Owner owner;
     private String image;
 

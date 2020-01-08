@@ -36,14 +36,12 @@ public class PetsController {
     }
 
 
-
     @PostMapping("form")
     public String savePet(@ModelAttribute("pet") Pet pet, @RequestParam("imageFile") Optional<MultipartFile> image, BindingResult errors, Principal principal) {
         if (errors.hasErrors()) {
             return "petForm";
         }
-
-        if(image.isPresent()){
+        if(!image.get().getName().equals("")){
             String imageName = uploadService.saveImage(image.get());
             pet.setImage(imageName);
         }
@@ -53,11 +51,9 @@ public class PetsController {
 
     @GetMapping("form")
     public String showPetForm(Optional<Long> id, Model model) {
-
         model.addAttribute(
                 "pet",
                 id.isPresent() ? petService.getPet(id.get()).get() : new Pet());
-
         return "petForm";
     }
 

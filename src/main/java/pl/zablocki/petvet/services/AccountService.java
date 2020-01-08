@@ -14,6 +14,7 @@ import pl.zablocki.petvet.repository.OwnerRepository;
 import pl.zablocki.petvet.repository.UserRepository;
 import pl.zablocki.petvet.repository.VetRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -128,6 +129,10 @@ public class AccountService {
         Owner owner = new Owner(savedUser, null);
         ownerRepository.save(owner);
 
+    }
+
+    public List<Vet> getAllVets() {
+        return vetRepository.findAll();
     }
 }
 

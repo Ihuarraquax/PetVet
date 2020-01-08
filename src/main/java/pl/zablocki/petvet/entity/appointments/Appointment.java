@@ -1,21 +1,41 @@
 package pl.zablocki.petvet.entity.appointments;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import pl.zablocki.petvet.entity.Owner;
 import pl.zablocki.petvet.entity.Pet;
+import pl.zablocki.petvet.entity.Vet;
 
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
 public class Appointment {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    @ManyToOne
     private Owner owner;
+    @ManyToOne
     private Pet pet;
     private String symptomsDescription;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime startDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime endDate;
+    @ManyToOne
+    private Vet vet;
+    private boolean isApproved;
 
     public Appointment() {
     }
 
-    public Appointment(Owner owner, Pet pet, String symptomsDescription) {
-        this.owner = owner;
-        this.pet = pet;
-        this.symptomsDescription = symptomsDescription;
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public Owner getOwner() {
@@ -40,5 +60,37 @@ public class Appointment {
 
     public void setSymptomsDescription(String symptomsDescription) {
         this.symptomsDescription = symptomsDescription;
+    }
+
+    public LocalDateTime getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDateTime getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDateTime endDate) {
+        this.endDate = endDate;
+    }
+
+    public Vet getVet() {
+        return vet;
+    }
+
+    public void setVet(Vet vet) {
+        this.vet = vet;
+    }
+
+    public boolean isApproved() {
+        return isApproved;
+    }
+
+    public void setApproved(boolean approved) {
+        isApproved = approved;
     }
 }

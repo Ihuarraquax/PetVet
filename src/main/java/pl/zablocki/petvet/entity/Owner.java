@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name = "owner")
 public class Owner {
 
     @Id
@@ -15,7 +16,7 @@ public class Owner {
     private User user;
     @OneToOne
     private Credentials credentials;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "owner")
     private List<Pet> pets;
 
     public Owner() {
@@ -57,6 +58,7 @@ public class Owner {
     public List<Pet> getPets() {
         return pets;
     }
+
     public void setPets(List<Pet> pets) {
         this.pets = pets;
     }

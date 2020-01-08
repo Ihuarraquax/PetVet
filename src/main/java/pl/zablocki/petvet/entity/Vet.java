@@ -58,4 +58,9 @@ public class Vet {
     public void setCredentials(Credentials credentials) {
         this.credentials = credentials;
     }
+
+    @Override
+    public String toString() {
+        return credentials.getFirstName() +" "+ credentials.getLastName() +" - ("+speciality+")";
+    }
 }

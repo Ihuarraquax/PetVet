@@ -11,57 +11,31 @@
 
 <div>
     <h1>Dodawanie/Edycja</h1>
-    <form th:method="POST" th:object="${appointment}" enctype="multipart/form-data">
+    <form th:method="POST" th:object="${appointment}">
         <div>
-            <label for="name" class="bmd-label-floating">Nazwa:</label>
-            <input id="name" type="text" name="name" th:value="*{name}"
-                   class="form-control" th:classappend="${#fields.hasErrors('name')}?'is-invalid'"
-                   required="true" autofocus="true"/>
-
-            <div class="error text-danger" th:if="${#fields.hasErrors('name')}">
-                <span th:each="err : ${#fields.errors('name')}" th:text="${err}"></span>
-            </div>
+            <label for="symptomsDescription" class="bmd-label-floating">Objawy:</label>
+            <input id="symptomsDescription" type="text" name="symptomsDescription" th:value="*{symptomsDescription}"
+                   class="form-control"/>
         </div>
         <div class="form-group">
-            <label for="type" class="bmd-label-floating">Typ pupila</label>
-            <select id="type" th:field="*{type.id}" class="form-control"
-                    th:classappend="${#fields.hasErrors('type.id')}?'is-invalid'">
-                <option th:each="type : ${petTypes}"
-                        th:value="${type.id}"
-                        th:text=" ${type.name}"></option>
+            <label for="pet" class="bmd-label-floating">Zwierzak:</label>
+            <select id="pet" th:field="*{pet}" class="form-control">
+                <option th:each="pet : *{owner.pets}"
+                        th:value="${pet.id}"
+                        th:text=" ${pet.name}"></option>
             </select>
-            <div class="error text-danger" th:if="${#fields.hasErrors('type.id')}">
-                <p th:each="err : ${#fields.errors('type.id')}" th:text="${err}"></p>
-            </div>
+        </div>
+        <div class="form-group">
+            <label for="vet" class="bmd-label-floating">Weterynarz:</label>
+            <select id="vet" th:field="*{vet}" class="form-control">
+                <option th:each="vet : ${vets}"
+                        th:value="${vet.id}"
+                        th:text=" ${vet.toString()}"></option>
+            </select>
         </div>
         <div>
-            <label for="breed" class="bmd-label-floating">Rasa:</label>
-            <input id="breed" type="text" name="breed" th:value="*{breed}"
-                   class="form-control" th:classappend="${#fields.hasErrors('breed')}?'is-invalid'"
-                   required="true" autofocus="true"/>
-
-            <div class="error text-danger" th:if="${#fields.hasErrors('breed')}">
-                <span th:each="err : ${#fields.errors('breed')}" th:text="${err}"></span>
-            </div>
-        </div>
-        <div>
-            <label class="bmd-label-floating">Płeć:</label>
-            </br>Samiec:
-            <input type="radio" name="sex" th:field="*{sex}" th:value="Male"/>
-            </br>Samica:
-            <input type="radio" name="sex" th:field="*{sex}" th:value="Female"/>
-
-        </div>
-
-        <div>
-            <label for="age" class="bmd-label-floating">Wiek:</label>
-            <input id="age" type="number" name="age" th:value="*{age}"
-                   class="form-control" th:classappend="${#fields.hasErrors('age')}?'is-invalid'"
-                   required="true" autofocus="true"/>
-
-            <div class="error text-danger" th:if="${#fields.hasErrors('age')}">
-                <span th:each="err : ${#fields.errors('age')}" th:text="${err}"></span>
-            </div>
+            <label for="startDate" class="bmd-label-floating">Start:</label>
+            <input id="startDate" type="datetime-local" name="startDate" th:value="*{startDate}" class="form-control"/>
         </div>
         <button type="submit" class="btn btn-primary btn-raised">Zapisz</button>
     </form>
