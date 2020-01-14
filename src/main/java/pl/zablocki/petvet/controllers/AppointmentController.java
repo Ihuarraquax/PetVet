@@ -11,6 +11,7 @@ import pl.zablocki.petvet.services.AccountService;
 import pl.zablocki.petvet.services.AppointmentService;
 
 import java.security.Principal;
+import java.time.LocalDate;
 
 @RequestMapping(path = "/appointments")
 @Controller
@@ -25,7 +26,11 @@ public class AppointmentController {
     }
 
     @GetMapping
-    public String appointmentsHomePage() {
+    public String appointmentsHomePage(Model model) {
+
+        appointmentService.getWeekSchedule(LocalDate.now());
+
+        model.addAttribute("weekSchedule", null);
         return "appointments/home";
     }
 

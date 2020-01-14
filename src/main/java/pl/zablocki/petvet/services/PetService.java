@@ -27,8 +27,8 @@ public class PetService {
         return petTypeRepository.findAll();
     }
 
-    public void savePet(Pet pet) {
-        petRepository.saveAndFlush(pet);
+    public Pet savePet(Pet pet) {
+        return petRepository.saveAndFlush(pet);
     }
 
     public void savePet(Pet pet, String email) {
