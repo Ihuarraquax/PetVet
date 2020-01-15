@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+
+</head>
+
+<body>
+
+<div th:fragment="weekSchedule">
+    <table class="table">
+        <thead class="black white-text">
+        <tr>
+            <th></th>
+            <th>Poniedziałek( <span th:text="${weekSchedule.monday}"></span>)</th>
+            <th>Wtorek( <span th:text="${weekSchedule.tuesday}"></span>)</th>
+            <th>Środa ( <span th:text="${weekSchedule.wednesday}"></span>)</th>
+            <th>Czwartek ( <span th:text="${weekSchedule.thursday}"></span>)</th>
+            <th>Piątek ( <span th:text="${weekSchedule.friday}"></span>)</th>
+            <th>Sobota ( <span th:text="${weekSchedule.saturday}"></span>)</th>
+        </tr>
+        </thead>
+        <tr th:each="appointmentHour: ${weekSchedule.appointmentHours}">
+            <td th:text="${#temporals.hour(appointmentHour.getHourStart())} + ':00-' + ${#temporals.hour(appointmentHour.getHourEnd())}+':00'"></td>
+
+            <td>
+                <a th:href="@{/appointments/{id}(id = ${appointmentHour.getMonday()?.getId()})}">
+                    <span th:text="${appointmentHour.getMonday()?.getId()}"></span>
+                </a>
+            </td>
+            <td>
+                <a th:href="@{/appointments/{id}(id = ${appointmentHour.getTuesday()?.getId()})}">
+                    <span th:text="${appointmentHour.getTuesday()?.getId()}"></span>
+                </a>
+            </td>
+            <td>
+                <a th:href="@{/appointments/{id}(id = ${appointmentHour.getWednesday()?.getId()})}">
+                    <span th:text="${appointmentHour.getWednesday()?.getId()}"></span>
+                </a>
+            </td>
+            <td>
+                <a th:href="@{/appointments/{id}(id = ${appointmentHour.getThursday()?.getId()})}">
+                    <span th:text="${appointmentHour.getThursday()?.getId()}"></span>
+                </a>
+            </td>
+            <td>
+                <a th:href="@{/appointments/{id}(id = ${appointmentHour.getFriday()?.getId()})}">
+                    <span th:text="${appointmentHour.getFriday()?.getId()}"></span>
+                </a>
+            </td>
+            <td>
+                <a th:href="@{/appointments/{id}(id = ${appointmentHour.getSaturday()?.getId()})}">
+                    <span th:text="${appointmentHour.getSaturday()?.getId()}"></span>
+                </a>
+            </td>
+
+        </tr>
+
+    </table>
+</div>
+
+</body>
+</html>

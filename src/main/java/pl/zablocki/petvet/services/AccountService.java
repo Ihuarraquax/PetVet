@@ -79,7 +79,7 @@ public class AccountService {
         user.setEnabled(true);
         User savedUser = userRepository.save(user);
 
-        Vet vet = new Vet(savedUser, null , Speciality.Fish);
+        Vet vet = new Vet(savedUser, null, Speciality.Fish);
         vetRepository.save(vet);
 
     }
@@ -87,27 +87,34 @@ public class AccountService {
     public Optional<Vet> getVetByEmail(String email) {
         Optional<User> user = userRepository.findByEmail(email);
 
-        if(user.isPresent()){
+        if (user.isPresent()) {
             return vetRepository.findByUser(user.get());
         }
 
         return Optional.empty();
     }
 
-    public void setCredentialsForVet(String email, Credentials credentials) {
+    public void setCredentials(String email, Credentials credentials) {
         Optional<Vet> vetOpt = getVetByEmail(email);
+        Optional<Owner> ownerOpt = getOwnerByEmail(email);
         if (vetOpt.isPresent()) {
             Credentials savedCredentials = credentialsRepository.save(credentials);
             Vet vet = vetOpt.get();
             vet.setCredentials(savedCredentials);
             vetRepository.saveAndFlush(vet);
         }
+        if (ownerOpt.isPresent()) {
+            Credentials savedCredentials = credentialsRepository.save(credentials);
+            Owner owner = ownerOpt.get();
+            owner.setCredentials(savedCredentials);
+            ownerRepository.saveAndFlush(owner);
+        }
     }
 
     public Optional<Owner> getOwnerByEmail(String email) {
         Optional<User> user = userRepository.findByEmail(email);
 
-        if(user.isPresent()){
+        if (user.isPresent()) {
             return ownerRepository.findByUser(user.get());
         }
 

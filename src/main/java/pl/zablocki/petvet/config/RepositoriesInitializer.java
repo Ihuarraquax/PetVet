@@ -48,10 +48,11 @@ public class RepositoriesInitializer {
             if(!accountService.getOwnerByEmail("zablo432432@o2.pl").isPresent()){
                 accountService.createOwnerAccount("zablo432432@o2.pl", "123");
                 zablo = accountService.getOwnerByEmail("zablo432432@o2.pl").get();
+                accountService.setCredentials("zablo432432@o2.pl", new Credentials("Hubert", "Zabłocki", LocalDate.of(1997, 9, 17), "123-725-473"));
             }
             if(!accountService.getVetByEmail("vet@o2.pl").isPresent()){
                 accountService.createVetAccount("vet@o2.pl", "123");
-                accountService.setCredentialsForVet("vet@o2.pl", new Credentials("Jan", "Nowak", LocalDate.now().minusYears(53)));
+                accountService.setCredentials("vet@o2.pl", new Credentials("Jan", "Nowak", LocalDate.now().minusYears(53),"142-324-534"));
                 vet = accountService.getVetByEmail("vet@o2.pl").get();
             }
 

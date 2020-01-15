@@ -2,17 +2,15 @@ package pl.zablocki.petvet.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.zablocki.petvet.entity.appointments.Appointment;
-import pl.zablocki.petvet.entity.appointments.Schedule.AppointmentHours;
+import pl.zablocki.petvet.exception.AppointmentNotFoundException;
 import pl.zablocki.petvet.services.AccountService;
 import pl.zablocki.petvet.services.AppointmentService;
 
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.Optional;
 
 @RequestMapping(path = "/appointments")
 @Controller
@@ -42,10 +40,30 @@ public class AppointmentController {
         model.addAttribute("appointment", appointment);
         return "appointments/appointmentForm";
     }
+
     @PostMapping(path = "/add")
     public String addAppointment(@ModelAttribute Appointment appointment) {
 
-        appointmentService.addAppointment(appointment);
+        appointmentService.saveAppointment(appointment);
+        return "redirect:/appointments";
+    }
+
+    @GetMapping(path = "/{id}")
+    public String showAppointment(Model model, @PathVariable long id) throws AppointmentNotFoundException {
+        Optional<Appointment> appointment = appointmentService.getAppointment(id);
+        if (!appointment.isPresent()) {
+            throw new AppointmentNotFoundException();
+        }
+        model.addAttribute("appointment", appointment.get());
+
+        return "appointments/details";
+    }
+
+    @GetMapping(path = "/approve/{id}")
+    public String approveAppointment(@PathVariable long id) {
+        Appointment appointment = appointmentService.getAppointment(id).get();
+        appointment.setApproved(true);
+        appointmentService.saveAppointment(appointment);
         return "redirect:/appointments";
     }
 }

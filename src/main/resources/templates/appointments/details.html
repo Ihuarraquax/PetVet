@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>PetVet - Strona główna</title>
+
+</head>
+<body>
+<div th:replace="fragments/header"></div>
+
+
+<span th:text="${appointment.getOwner().getCredentials()}"></span>
+<span th:text="${appointment.getPet()}"></span>
+<span th:text="${appointment.getSymptomsDescription()}"></span>
+<span th:text="${#temporals.format(appointment.getStartDate())}"></span>
+
+
+<div th:if="${#authentication.getName() eq appointment.getVet().getUser().getEmail() }">
+    <a th:href="@{/appointments/approve/{id}(id = ${appointment.getId()})}">zatwiedz</a>
+</div>
+
+
+<div th:replace="fragments/footer"></div>
+</body>
+</html>
