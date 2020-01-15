@@ -14,14 +14,14 @@
     <table>
         <tr>
             <th></th>
-            <th>Poniedziałek (data)</th>
-            <th>Wtorek (data)</th>
-            <th>Środa (data)</th>
-            <th>Czwartek (data)</th>
-            <th>Piątek (data)</th>
-            <th>Sobota (data)</th>
+            <th>Poniedziałek( <span th:text="${weekSchedule.monday}"></span>)</th>
+            <th>Wtorek( <span th:text="${weekSchedule.tuesday}"></span>)</th>
+            <th>Środa ( <span th:text="${weekSchedule.wednesday}"></span>)</th>
+            <th>Czwartek ( <span th:text="${weekSchedule.thursday}"></span>)</th>
+            <th>Piątek ( <span th:text="${weekSchedule.friday}"></span>)</th>
+            <th>Sobota ( <span th:text="${weekSchedule.saturday}"></span>)</th>
         </tr>
-        <tr th:each="appointmentHour: ${weekSchedule}">
+        <tr th:each="appointmentHour: ${weekSchedule.appointmentHours}">
             <td th:text="${#temporals.hour(appointmentHour.getHourStart())} + ':00-' + ${#temporals.hour(appointmentHour.getHourEnd())}+':00'"></td>
             <td th:text="${appointmentHour.getMonday()}"></td>
             <td th:text="${appointmentHour.getTuesday()}"></td>

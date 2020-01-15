@@ -29,9 +29,9 @@ public class AppointmentController {
     @GetMapping
     public String appointmentsHomePage(Model model) {
 
-        AppointmentHours[] weekSchedule = appointmentService.getWeekSchedule(LocalDate.now());
 
-        model.addAttribute("weekSchedule", weekSchedule);
+        model.addAttribute("weekSchedule", appointmentService.getWeekSchedule(LocalDate.now()));
+
         return "appointments/home";
     }
 
