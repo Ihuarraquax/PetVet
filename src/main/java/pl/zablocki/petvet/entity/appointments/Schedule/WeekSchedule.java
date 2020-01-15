@@ -12,4 +12,8 @@ public class WeekSchedule {
     public LocalDate friday;
     public LocalDate saturday;
     public AppointmentHours[] appointmentHours;
+
+    public WeekSchedule(AppointmentHours[] appointmentHours) {
+        this.appointmentHours = appointmentHours;
+    }
 }

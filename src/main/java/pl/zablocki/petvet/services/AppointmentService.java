@@ -26,24 +26,13 @@ public class AppointmentService {
 
     public WeekSchedule getWeekSchedule(LocalDate date) {
 
-        WeekSchedule weekSchedule = new WeekSchedule();
-        int dayOfWeek = date.getDayOfWeek().getValue();
-        LocalDate weekStartDate = date.minusDays(dayOfWeek - 1);
-
-
-        weekSchedule.monday = weekStartDate;
-        weekSchedule.tuesday = weekStartDate.plusDays(1);
-        weekSchedule.wednesday = weekStartDate.plusDays(2);
-        weekSchedule.thursday = weekStartDate.plusDays(3);
-        weekSchedule.friday = weekStartDate.plusDays(4);
-        weekSchedule.saturday = weekStartDate.plusDays(5);
-
-
-
+        LocalDate weekStartDate = getWeekStartDate(date);
         List<Appointment> weekAppointments = getAppointmentsFromWeek(weekStartDate);
-        WeekScheduler weekScheduler = new WeekScheduler(weekAppointments);
-        weekSchedule.appointmentHours = weekScheduler.getAppointmentHours();
-        return weekSchedule;
+        return WeekScheduler.getWeekSchedule(weekAppointments,weekStartDate);
+    }
+
+    private LocalDate getWeekStartDate(LocalDate date) {
+        return date.minusDays(date.getDayOfWeek().getValue() - 1);
     }
 
     private List<Appointment> getAppointmentsFromWeek(LocalDate date) {

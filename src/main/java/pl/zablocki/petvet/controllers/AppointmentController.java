@@ -29,9 +29,7 @@ public class AppointmentController {
     @GetMapping
     public String appointmentsHomePage(Model model) {
 
-
         model.addAttribute("weekSchedule", appointmentService.getWeekSchedule(LocalDate.now()));
-
         return "appointments/home";
     }
 

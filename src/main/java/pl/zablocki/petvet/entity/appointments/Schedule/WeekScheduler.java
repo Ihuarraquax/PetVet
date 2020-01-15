@@ -2,16 +2,17 @@ package pl.zablocki.petvet.entity.appointments.Schedule;
 
 import pl.zablocki.petvet.entity.appointments.Appointment;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
 public class WeekScheduler {
-    private final AppointmentHours[] appointmentHours;
-    private final int HOURS = 8;
+    private final static int HOURS = 8;
 
-    public WeekScheduler(List<Appointment> weekAppointments) {
 
-        appointmentHours = new AppointmentHours[HOURS];
+    private static AppointmentHours[] getAppointmentHours(List<Appointment> weekAppointments) {
+
+        AppointmentHours[] appointmentHours = new AppointmentHours[HOURS];
         for (int i = 0; i < HOURS; i++) {
             appointmentHours[i] = new AppointmentHours();
             appointmentHours[i].setHourStart(LocalTime.of(i+HOURS,0));
@@ -23,9 +24,18 @@ public class WeekScheduler {
             int hour = appointment.getStartDate().getHour();
             appointmentHours[hour-HOURS].putInDay(dayOfWeek, appointment);
         }
+        return appointmentHours;
     }
 
-    public AppointmentHours[] getAppointmentHours() {
-        return appointmentHours;
+
+    public static WeekSchedule getWeekSchedule(List<Appointment> weekAppointments, LocalDate weekStartDate) {
+        WeekSchedule weekSchedule = new WeekSchedule(getAppointmentHours(weekAppointments));
+        weekSchedule.monday = weekStartDate;
+        weekSchedule.tuesday = weekStartDate.plusDays(1);
+        weekSchedule.wednesday = weekStartDate.plusDays(2);
+        weekSchedule.thursday = weekStartDate.plusDays(3);
+        weekSchedule.friday = weekStartDate.plusDays(4);
+        weekSchedule.saturday = weekStartDate.plusDays(5);
+        return weekSchedule;
     }
 }
