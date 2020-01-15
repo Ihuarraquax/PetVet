@@ -3,6 +3,8 @@ package pl.zablocki.petvet.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pl.zablocki.petvet.entity.Examination;
+import pl.zablocki.petvet.entity.ExaminationType;
 import pl.zablocki.petvet.entity.appointments.Appointment;
 import pl.zablocki.petvet.exception.AppointmentNotFoundException;
 import pl.zablocki.petvet.services.AccountService;
@@ -66,4 +68,16 @@ public class AppointmentController {
         appointmentService.saveAppointment(appointment);
         return "redirect:/appointments";
     }
+
+    @GetMapping(path = "/examination/{id}")
+    public String startExamination(@PathVariable long id, Model model) {
+        Appointment appointment = appointmentService.getAppointment(id).get();
+        Examination examination = new Examination();
+        examination.setPet(appointment.getPet());
+        examination.setVet(appointment.getVet());
+
+        model.addAttribute(examination);
+        return "appointments/examination";
+    }
+
 }

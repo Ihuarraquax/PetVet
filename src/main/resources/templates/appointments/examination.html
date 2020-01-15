@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>PetVet - Strona główna</title>
+
+</head>
+<body>
+<div th:replace="fragments/header"></div>
+
+
+<form th:method="POST" th:object="${examination}" enctype="multipart/form-data">
+
+    <div class="form-group">
+        <label for="examinationType" class="bmd-label-floating">Rodzaj operacji</label>
+        <select id="examinationType" th:field="*{examinationType}" class="form-control"
+                th:classappend="${#fields.hasErrors('examinationType')}?'is-invalid'">
+            <option th:each="type : ${T(pl.zablocki.petvet.entity.ExaminationType).values()}"
+                    th:value="${type}"
+                    th:text=" ${type}"></option>
+        </select>
+    </div>
+
+
+
+    <div>
+        <label for="diagnosis" class="bmd-label-floating">Diagnoza:</label>
+        <textarea id="diagnosis" name="diagnosis" th:value="*{diagnosis}"
+               class="form-control" th:classappend="${#fields.hasErrors('diagnosis')}?'is-invalid'"
+               required="true" autofocus="true"></textarea>
+
+        <div class="error text-danger" th:if="${#fields.hasErrors('diagnosis')}">
+            <span th:each="err : ${#fields.errors('diagnosis')}" th:text="${err}"></span>
+        </div>
+    </div>
+
+
+
+    <div>
+        <label for="results" class="bmd-label-floating">Rezultat:</label>
+        <textarea id="results" name="results" th:value="*{results}"
+               class="form-control" th:classappend="${#fields.hasErrors('results')}?'is-invalid'"
+               required="true" autofocus="true"></textarea>
+
+        <div class="error text-danger" th:if="${#fields.hasErrors('results')}">
+            <span th:each="err : ${#fields.errors('results')}" th:text="${err}"></span>
+        </div>
+    </div>
+
+
+    <div>
+        <label for="prescription" class="bmd-label-floating">Recepta:</label>
+        <textarea id="prescription" name="prescription" th:value="*{prescription}"
+               class="form-control" th:classappend="${#fields.hasErrors('prescription')}?'is-invalid'"
+               required="true" autofocus="true"></textarea>
+
+        <div class="error text-danger" th:if="${#fields.hasErrors('prescription')}">
+            <span th:each="err : ${#fields.errors('prescription')}" th:text="${err}"></span>
+        </div>
+    </div>
+
+
+
+    <button type="submit" class="btn btn-primary btn-raised">Zapisz</button>
+</form>
+
+
+
+<div th:replace="fragments/footer"></div>
+</body>
+</html>
