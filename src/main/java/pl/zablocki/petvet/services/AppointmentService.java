@@ -2,7 +2,8 @@ package pl.zablocki.petvet.services;
 
 import org.springframework.stereotype.Service;
 import pl.zablocki.petvet.entity.appointments.Appointment;
-import pl.zablocki.petvet.entity.appointments.Schedule.WeekSchedule;
+import pl.zablocki.petvet.entity.appointments.Schedule.AppointmentHours;
+import pl.zablocki.petvet.entity.appointments.Schedule.WeekScheduler;
 import pl.zablocki.petvet.repository.AppointmentRepository;
 
 import java.time.LocalDate;
@@ -22,14 +23,14 @@ public class AppointmentService {
         appointmentRepository.save(appointment);
     }
 
-    public WeekSchedule getWeekSchedule(LocalDate date) {
+    public AppointmentHours[] getWeekSchedule(LocalDate date) {
 
         int dayOfWeek = date.getDayOfWeek().getValue();
         LocalDate weekStartDate = date.minusDays(dayOfWeek - 1);
 
         List<Appointment> weekAppointments = getAppointmentsFromWeek(weekStartDate);
-
-        return new WeekSchedule(weekAppointments);
+        WeekScheduler weekScheduler = new WeekScheduler(weekAppointments);
+        return weekScheduler.getAppointmentHours();
     }
 
     private List<Appointment> getAppointmentsFromWeek(LocalDate date) {

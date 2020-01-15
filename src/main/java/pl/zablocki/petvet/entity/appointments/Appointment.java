@@ -90,4 +90,18 @@ public class Appointment {
     public void setApproved(boolean approved) {
         isApproved = approved;
     }
+
+    @Override
+    public String toString() {
+        return "Appointment{" +
+                "id=" + id +
+                ", owner=" + owner +
+                ", pet=" + pet +
+                ", symptomsDescription='" + symptomsDescription + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", vet=" + vet +
+                ", isApproved=" + isApproved +
+                '}';
+    }
 }

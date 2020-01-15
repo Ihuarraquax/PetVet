@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>PetVet - Strona główna</title>
+
+</head>
+<body>
+<div th:replace="fragments/header"></div>
+
+
+<div id="appointment-view">
+
+    <table>
+        <tr>
+            <th>Godzina</th>
+            <th>Poniedziałek (data)</th>
+            <th>Wtorek (data)</th>
+            <th>Środa (data)</th>
+            <th>Czwartek (data)</th>
+            <th>Piątek (data)</th>
+            <th>Sobota (data)</th>
+        </tr>
+        <tr th:each="appointmentHour: ${weekSchedule}">
+            <td th:text="${appointmentHour.getHour()}"></td>
+            <td th:text="${appointmentHour.getMonday()}"></td>
+            <td th:text="${appointmentHour.getTuesday()}"></td>
+            <td th:text="${appointmentHour.getWednesday()}"></td>
+            <td th:text="${appointmentHour.getThursday()}"></td>
+            <td th:text="${appointmentHour.getFriday()}"></td>
+            <td th:text="${appointmentHour.getSaturday()}"></td>
+        </tr>
+
+    </table>
+
+
+</div>
+
+
+<div>
+    <a th:href="@{/appointments/add}">Umów wizyte</a>
+</div>
+
+
+<div th:replace="fragments/footer"></div>
+</body>
+</html>

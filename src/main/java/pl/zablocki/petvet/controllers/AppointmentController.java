@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.zablocki.petvet.entity.appointments.Appointment;
+import pl.zablocki.petvet.entity.appointments.Schedule.AppointmentHours;
 import pl.zablocki.petvet.services.AccountService;
 import pl.zablocki.petvet.services.AppointmentService;
 
@@ -28,9 +29,9 @@ public class AppointmentController {
     @GetMapping
     public String appointmentsHomePage(Model model) {
 
-        appointmentService.getWeekSchedule(LocalDate.now());
+        AppointmentHours[] weekSchedule = appointmentService.getWeekSchedule(LocalDate.now());
 
-        model.addAttribute("weekSchedule", null);
+        model.addAttribute("weekSchedule", weekSchedule);
         return "appointments/home";
     }
 
