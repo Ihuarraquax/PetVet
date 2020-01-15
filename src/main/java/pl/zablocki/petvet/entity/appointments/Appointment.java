@@ -1,5 +1,6 @@
 package pl.zablocki.petvet.entity.appointments;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import pl.zablocki.petvet.entity.Owner;
 import pl.zablocki.petvet.entity.Pet;
 import pl.zablocki.petvet.entity.Vet;
@@ -18,7 +19,9 @@ public class Appointment {
     @ManyToOne
     private Pet pet;
     private String symptomsDescription;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime startDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime endDate;
     @ManyToOne
     private Vet vet;

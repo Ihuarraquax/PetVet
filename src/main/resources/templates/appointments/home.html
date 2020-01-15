@@ -13,7 +13,7 @@
 
     <table>
         <tr>
-            <th>Godzina</th>
+            <th></th>
             <th>Poniedziałek (data)</th>
             <th>Wtorek (data)</th>
             <th>Środa (data)</th>
@@ -22,7 +22,7 @@
             <th>Sobota (data)</th>
         </tr>
         <tr th:each="appointmentHour: ${weekSchedule}">
-            <td th:text="${appointmentHour.getHour()}"></td>
+            <td th:text="${#temporals.hour(appointmentHour.getHourStart())} + ':00-' + ${#temporals.hour(appointmentHour.getHourEnd())}+':00'"></td>
             <td th:text="${appointmentHour.getMonday()}"></td>
             <td th:text="${appointmentHour.getTuesday()}"></td>
             <td th:text="${appointmentHour.getWednesday()}"></td>

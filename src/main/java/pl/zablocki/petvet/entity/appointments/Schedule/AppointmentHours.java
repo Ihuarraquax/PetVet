@@ -2,8 +2,11 @@ package pl.zablocki.petvet.entity.appointments.Schedule;
 
 import pl.zablocki.petvet.entity.appointments.Appointment;
 
+import java.time.LocalTime;
+
 public class AppointmentHours {
-    public int hour;
+    public LocalTime hourStart;
+    public LocalTime hourEnd;
     public Appointment monday;
     public Appointment tuesday;
     public Appointment wednesday;
@@ -11,8 +14,7 @@ public class AppointmentHours {
     public Appointment friday;
     public Appointment saturday;
 
-    public void putInDay(int hour, int dayOfWeek, Appointment appointment) {
-        this.hour = hour;
+    public void putInDay(int dayOfWeek, Appointment appointment) {
         switch (dayOfWeek) {
             case 0:
                 monday = appointment;
@@ -35,12 +37,20 @@ public class AppointmentHours {
         }
     }
 
-    public int getHour() {
-        return hour;
+    public LocalTime getHourStart() {
+        return hourStart;
     }
 
-    public void setHour(int hour) {
-        this.hour = hour;
+    public void setHourStart(LocalTime hourStart) {
+        this.hourStart = hourStart;
+    }
+
+    public LocalTime getHourEnd() {
+        return hourEnd;
+    }
+
+    public void setHourEnd(LocalTime hourEnd) {
+        this.hourEnd = hourEnd;
     }
 
     public Appointment getMonday() {
