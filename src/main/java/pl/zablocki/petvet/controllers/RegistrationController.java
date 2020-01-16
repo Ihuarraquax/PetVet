@@ -34,7 +34,7 @@ public class RegistrationController {
         if (result.hasErrors()) {
             return new ModelAndView("registration", "user", accountDto);
         } else {
-            accountService.createUserAccount(accountDto.getEmail(),accountDto.getPassword());
+            accountService.createOwnerAccount(accountDto.getEmail(),accountDto.getPassword());
             return new ModelAndView("login", "user", accountDto);
         }
     }

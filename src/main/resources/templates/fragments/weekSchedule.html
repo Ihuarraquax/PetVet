@@ -12,12 +12,12 @@
         <thead class="black white-text">
         <tr>
             <th></th>
-            <th>Poniedziałek( <span th:text="${weekSchedule.monday}"></span>)</th>
-            <th>Wtorek( <span th:text="${weekSchedule.tuesday}"></span>)</th>
-            <th>Środa ( <span th:text="${weekSchedule.wednesday}"></span>)</th>
-            <th>Czwartek ( <span th:text="${weekSchedule.thursday}"></span>)</th>
-            <th>Piątek ( <span th:text="${weekSchedule.friday}"></span>)</th>
-            <th>Sobota ( <span th:text="${weekSchedule.saturday}"></span>)</th>
+            <th>Poniedziałek <span th:text="${weekSchedule.monday}"></span></th>
+            <th>Wtorek <span th:text="${weekSchedule.tuesday}"></span></th>
+            <th>Środa <span th:text="${weekSchedule.wednesday}"></span></th>
+            <th>Czwartek <span th:text="${weekSchedule.thursday}"></span></th>
+            <th>Piątek <span th:text="${weekSchedule.friday}"></span></th>
+            <th>Sobota <span th:text="${weekSchedule.saturday}"></span></th>
         </tr>
         </thead>
         <tr th:each="appointmentHour: ${weekSchedule.appointmentHours}">

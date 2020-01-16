@@ -30,8 +30,14 @@ public class PetsController {
     }
 
     @GetMapping()
-    public String showPetsList(Model model, Principal principal) {
-        model.addAttribute("myPets", petService.getOwnerPets(principal.getName()));
+    public String showMyPetsList(Model model, Principal principal) {
+        model.addAttribute("pets", petService.getOwnerPets(principal.getName()));
+        return "pets";
+    }
+
+    @GetMapping("/all")
+    public String showAllPetsList(Model model) {
+        model.addAttribute("pets", petService.getAllPets());
         return "pets";
     }
 
