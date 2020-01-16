@@ -30,9 +30,8 @@ public class AppointmentController {
     }
 
     @GetMapping
-    public String appointmentsHomePage(Model model) {
-
-        model.addAttribute("weekSchedule", appointmentService.getWeekSchedule(LocalDate.now()));
+    public String appointmentsHomePage(Model model, @RequestParam(value = "week", defaultValue = "0", required = false) int week ) {
+        model.addAttribute("weekSchedule", appointmentService.getWeekSchedule(LocalDate.now(), week));
         return "appointments/home";
     }
 

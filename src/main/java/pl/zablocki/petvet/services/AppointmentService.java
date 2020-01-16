@@ -28,9 +28,9 @@ public class AppointmentService {
         appointmentRepository.save(appointment);
     }
 
-    public WeekSchedule getWeekSchedule(LocalDate date) {
+    public WeekSchedule getWeekSchedule(LocalDate date, int weekFromCurrent) {
 
-        LocalDate weekStartDate = getWeekStartDate(date);
+        LocalDate weekStartDate = getWeekStartDate(date.plusWeeks(weekFromCurrent));
         List<Appointment> weekAppointments = getAppointmentsFromWeek(weekStartDate);
         return WeekScheduler.getWeekSchedule(weekAppointments,weekStartDate);
     }

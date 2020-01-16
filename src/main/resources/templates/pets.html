@@ -57,7 +57,7 @@
 
     </tbody>
 </table>
-
+<div th:replace="fragments/pagination :: pager('/pets',${vehicleListPage})"/>
 <div sec:authorize="hasRole('ROLE_USER')">
     <a href="/pets/form">Dodaj pupila</a>
 </div>
