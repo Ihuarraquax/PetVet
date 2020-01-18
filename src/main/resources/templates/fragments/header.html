@@ -34,11 +34,11 @@
                 <ul class="nav navbar-nav nav-flex-icons ml-auto">
                     <div sec:authorize="hasAuthority('ROLE_USER')">
                         <a class="nav-link" href="/pets">Moje zwierzęta</a>
-                        <a class="nav-link" href="/appointments">Wizyty</a>
+                        <a class="nav-link" href="/appointment">Wizyty</a>
                     </div>
                     <div sec:authorize="hasAuthority('ROLE_VET')">
                         <a class="nav-link" href="/pets/all">Baza zwierząt</a>
-                        <a class="nav-link" href="/appointments">Wizyty</a>
+                        <a class="nav-link" href="/appointment">Wizyty</a>
                     </div>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"

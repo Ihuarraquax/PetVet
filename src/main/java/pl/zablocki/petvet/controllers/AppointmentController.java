@@ -14,25 +14,23 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.util.Optional;
 
-@SessionAttributes("appointmentSession")
-@RequestMapping(path = "/appointments")
+
+@RequestMapping(path = "/appointment")
 @Controller
 public class AppointmentController {
 
     private final AccountService accountService;
     private final AppointmentService appointmentService;
-    private final ExaminationService examinationService;
 
-    public AppointmentController(AccountService accountService, AppointmentService appointmentService, ExaminationService examinationService) {
+    public AppointmentController(AccountService accountService, AppointmentService appointmentService) {
         this.accountService = accountService;
         this.appointmentService = appointmentService;
-        this.examinationService = examinationService;
     }
 
     @GetMapping
     public String appointmentsHomePage(Model model, @RequestParam(value = "week", defaultValue = "0", required = false) int week ) {
         model.addAttribute("weekSchedule", appointmentService.getWeekSchedule(LocalDate.now(), week));
-        return "appointments/home";
+        return "appointment/home";
     }
 
     @GetMapping(path = "/add")
@@ -42,14 +40,14 @@ public class AppointmentController {
         appointment.setOwner(accountService.getOwnerByEmail(principal.getName()).get());
         model.addAttribute("vets", accountService.getAllVets());
         model.addAttribute("appointment", appointment);
-        return "appointments/appointmentForm";
+        return "appointment/appointmentForm";
     }
 
     @PostMapping(path = "/add")
     public String addAppointment(@ModelAttribute Appointment appointment) {
 
         appointmentService.saveAppointment(appointment);
-        return "redirect:/appointments";
+        return "redirect:/appointment";
     }
 
     @GetMapping(path = "/{id}")
@@ -60,7 +58,7 @@ public class AppointmentController {
         }
         model.addAttribute("appointment", appointment.get());
 
-        return "appointments/details";
+        return "appointment/details";
     }
 
     @GetMapping(path = "/approve/{id}")
@@ -68,25 +66,10 @@ public class AppointmentController {
         Appointment appointment = appointmentService.getAppointment(id).get();
         appointment.setApproved(true);
         appointmentService.saveAppointment(appointment);
-        return "redirect:/appointments";
+        return "redirect:/appointment";
     }
 
-    @GetMapping(path = "/examination/{id}")
-    public String startExamination(@PathVariable long id, Model model, @ModelAttribute Appointment appointmentSession) {
-        appointmentSession = appointmentService.getAppointment(id).get();
-        Examination examination = new Examination();
-        model.addAttribute("examination", examination);
-        return "appointments/examination";
-    }
 
-    @PostMapping(path = "/examination/{id}")
-    public String saveExamination(@ModelAttribute Examination examination, @PathVariable long id) {
-        Appointment appointment = appointmentService.getAppointment(id).get();
-        examination.setPet(appointment.getPet());
-        examination.setVet(appointment.getVet());
-        examinationService.saveExamination(examination);
-        return "redirect:/appointments";
-    }
 
 
     @ModelAttribute("appointmentSession")

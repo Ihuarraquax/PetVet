@@ -24,32 +24,32 @@
             <td th:text="${#temporals.hour(appointmentHour.getHourStart())} + ':00-' + ${#temporals.hour(appointmentHour.getHourEnd())}+':00'"></td>
 
             <td>
-                <a th:href="@{/appointments/{id}(id = ${appointmentHour.getMonday()?.getId()})}">
+                <a th:href="@{/appointment/{id}(id = ${appointmentHour.getMonday()?.getId()})}">
                     <span th:text="${appointmentHour.getMonday()?.getId()}"></span>
                 </a>
             </td>
             <td>
-                <a th:href="@{/appointments/{id}(id = ${appointmentHour.getTuesday()?.getId()})}">
+                <a th:href="@{/appointment/{id}(id = ${appointmentHour.getTuesday()?.getId()})}">
                     <span th:text="${appointmentHour.getTuesday()?.getId()}"></span>
                 </a>
             </td>
             <td>
-                <a th:href="@{/appointments/{id}(id = ${appointmentHour.getWednesday()?.getId()})}">
+                <a th:href="@{/appointment/{id}(id = ${appointmentHour.getWednesday()?.getId()})}">
                     <span th:text="${appointmentHour.getWednesday()?.getId()}"></span>
                 </a>
             </td>
             <td>
-                <a th:href="@{/appointments/{id}(id = ${appointmentHour.getThursday()?.getId()})}">
+                <a th:href="@{/appointment/{id}(id = ${appointmentHour.getThursday()?.getId()})}">
                     <span th:text="${appointmentHour.getThursday()?.getId()}"></span>
                 </a>
             </td>
             <td>
-                <a th:href="@{/appointments/{id}(id = ${appointmentHour.getFriday()?.getId()})}">
+                <a th:href="@{/appointment/{id}(id = ${appointmentHour.getFriday()?.getId()})}">
                     <span th:text="${appointmentHour.getFriday()?.getId()}"></span>
                 </a>
             </td>
             <td>
-                <a th:href="@{/appointments/{id}(id = ${appointmentHour.getSaturday()?.getId()})}">
+                <a th:href="@{/appointment/{id}(id = ${appointmentHour.getSaturday()?.getId()})}">
                     <span th:text="${appointmentHour.getSaturday()?.getId()}"></span>
                 </a>
             </td>

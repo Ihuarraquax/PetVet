@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" type="text/css" href="../static/styles.css"/>
+    <meta charset="UTF-8">
+    <title>PetVet - Strona główna</title>
+
+</head>
+<body>
+<div th:replace="fragments/header"></div>
+
+<h1>Strona ze zwierzętami!</h1>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Data</th>
+        <th>Zwierze</th>
+        <th>Właściciel</th>
+        <th>Weterynarz</th>
+        <th>Diagnoza</th>
+        <th>Rezultat</th>
+        <th>Recepta</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="examination : ${examinations}">
+        <td>
+            <a th:href="@{/examination/details/(id=*{examination.id})}">
+                <span th:text="*{#temporals.format(examination.date)}"></span>
+            </a>
+        </td>
+        <td>
+            <span th:text="*{examination.pet.name}"></span>
+        </td>
+        <td>
+            <span th:text="*{examination.pet.owner.getCredentials()}"></span>
+        </td>
+        <td>
+            <span th:text="*{examination.vet.getCredentials()}"></span>
+        </td>
+        <td>
+            <span th:text="*{examination.diagnosis}"></span>
+        </td>
+        <td>
+            <span th:text="*{examination.results}"></span>
+        </td>
+        <td>
+            <span th:text="*{examination.prescription}"></span>
+        </td>
+        <td>
+    </tr>
+
+    </tbody>
+</table>
+
+<div th:replace="fragments/pagination :: pager('/examination/all',${examinations})"></div>
+
+</body>
+</html>

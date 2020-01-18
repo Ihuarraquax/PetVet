@@ -1,6 +1,8 @@
 package pl.zablocki.petvet.entity;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 public class Examination {
@@ -15,7 +17,15 @@ public class Examination {
     private String diagnosis;
     private String prescription;
     private String results;
+    private LocalDateTime date;
 
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
 
     public long getId() {
         return id;

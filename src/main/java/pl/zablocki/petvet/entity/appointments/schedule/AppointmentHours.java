@@ -1,4 +1,4 @@
-package pl.zablocki.petvet.entity.appointments.Schedule;
+package pl.zablocki.petvet.entity.appointments.schedule;
 
 import pl.zablocki.petvet.entity.appointments.Appointment;
 

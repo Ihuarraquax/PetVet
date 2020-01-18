@@ -2,8 +2,8 @@ package pl.zablocki.petvet.services;
 
 import org.springframework.stereotype.Service;
 import pl.zablocki.petvet.entity.appointments.Appointment;
-import pl.zablocki.petvet.entity.appointments.Schedule.WeekSchedule;
-import pl.zablocki.petvet.entity.appointments.Schedule.WeekScheduler;
+import pl.zablocki.petvet.entity.appointments.schedule.WeekSchedule;
+import pl.zablocki.petvet.entity.appointments.schedule.WeekScheduler;
 import pl.zablocki.petvet.repository.AppointmentRepository;
 
 import java.time.LocalDate;
