@@ -2,6 +2,7 @@ package pl.zablocki.petvet.controllers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,8 +37,8 @@ public class PetsController {
     }
 
     @GetMapping("/all")
-    public String showAllPetsList(Model model) {
-        model.addAttribute("pets", petService.getAllPets());
+    public String showAllPetsList(Model model, Pageable pageable) {
+        model.addAttribute("pets", petService.getAllPets(pageable));
         return "pets";
     }
 
