@@ -41,9 +41,9 @@ public class PetService {
         petRepository.saveAndFlush(pet);
     }
 
-    public List<Pet> getOwnerPets(String email) {
+    public Page<Pet> getOwnerPets(String email, Pageable pageable) {
         Owner owner = accountService.getOwnerByEmail(email).get();
-        return petRepository.findAllByOwner(owner);
+        return petRepository.findAllByOwner(owner, pageable);
     }
 
     public List<Pet> findAll() {

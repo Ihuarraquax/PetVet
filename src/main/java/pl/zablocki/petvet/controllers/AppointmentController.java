@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.zablocki.petvet.entity.Examination;
+import pl.zablocki.petvet.entity.Owner;
 import pl.zablocki.petvet.entity.appointments.Appointment;
 import pl.zablocki.petvet.exception.AppointmentNotFoundException;
 import pl.zablocki.petvet.services.AccountService;
@@ -44,8 +45,9 @@ public class AppointmentController {
     }
 
     @PostMapping(path = "/add")
-    public String addAppointment(@ModelAttribute Appointment appointment) {
-
+    public String addAppointment(@ModelAttribute Appointment appointment, Principal principal) {
+        Optional<Owner> ownerByEmail = accountService.getOwnerByEmail(principal.getName());
+        appointment.setOwner(ownerByEmail.get());
         appointmentService.saveAppointment(appointment);
         return "redirect:/appointment";
     }
@@ -68,8 +70,6 @@ public class AppointmentController {
         appointmentService.saveAppointment(appointment);
         return "redirect:/appointment";
     }
-
-
 
 
     @ModelAttribute("appointmentSession")

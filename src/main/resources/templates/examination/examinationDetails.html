@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" type="text/css" href="../static/styles.css"/>
+    <meta charset="UTF-8">
+    <title>PetVet - Szczegóły badania</title>
+
+</head>
+<body>
+<div th:replace="fragments/header"></div>
+
+
+<div id="main" class="container">
+    <H1>Szczegóły badania</H1>
+    Wewnętrzny numer badania: <b th:text="${examination.id}"></b><br/>
+    Data:  <b th:text="*{#temporals.format(examination.date)}"></b>
+    Pacjent: <b th:text="${examination.pet.name}"></b><br/>
+    Weterynarz: <b th:text="${examination.vet.credentials}"></b><br/>
+    Typ: <b th:text="${examination.examinationType.name()}"></b><br/>
+    Diagnoza: <b th:text="${examination.diagnosis}"></b><br/>
+    Rezultat: <b th:text="${examination.results}"></b><br/>
+    Recepta: <b th:text="${examination.prescription}"></b><br/>
+
+    <br/>
+    <a class="btn btn-success" href="/examination/all">Wstecz</a>
+</div>
+
+</body>
+</html>

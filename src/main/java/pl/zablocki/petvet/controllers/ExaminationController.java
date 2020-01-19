@@ -34,7 +34,7 @@ public class ExaminationController {
     @GetMapping(path = "details/{id}")
     public String getDetails(@PathVariable long id, Model model) {
         Optional<Examination> examination = examinationService.findExaminationById(id);
-        model.addAttribute("examination", examination);
+        model.addAttribute("examination", examination.get());
         return "examination/examinationDetails";
     }
 

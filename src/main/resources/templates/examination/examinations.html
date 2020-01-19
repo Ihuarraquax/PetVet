@@ -26,7 +26,7 @@
     <tbody>
     <tr th:each="examination : ${examinations}">
         <td>
-            <a th:href="@{/examination/details/(id=*{examination.id})}">
+            <a th:href="@{/examination/details/{id}(id=*{examination.id})}">
                 <span th:text="*{#temporals.format(examination.date)}"></span>
             </a>
         </td>

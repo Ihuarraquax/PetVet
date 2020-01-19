@@ -3,6 +3,8 @@ package pl.zablocki.petvet.controllers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +18,8 @@ import pl.zablocki.petvet.services.UploadService;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RequestMapping("/pets")
 @Controller
@@ -31,16 +35,20 @@ public class PetsController {
     }
 
     @GetMapping()
-    public String showMyPetsList(Model model, Principal principal) {
-        model.addAttribute("pets", petService.getOwnerPets(principal.getName()));
+    public String showMyPetsList(Model model,Pageable pageable, Principal principal) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Set<String> roles = authentication.getAuthorities().stream()
+                .map(r -> r.getAuthority()).collect(Collectors.toSet());
+
+        if (roles.contains("ROLE_VET")) {
+            model.addAttribute("pets", petService.getAllPets(pageable));
+        }
+        else{
+            model.addAttribute("pets", petService.getOwnerPets(principal.getName(),pageable));
+        }
         return "pets";
     }
 
-    @GetMapping("/all")
-    public String showAllPetsList(Model model, Pageable pageable) {
-        model.addAttribute("pets", petService.getAllPets(pageable));
-        return "pets";
-    }
 
 
     @PostMapping("form")
