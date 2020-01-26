@@ -3,6 +3,7 @@ package pl.zablocki.petvet.services;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import pl.zablocki.petvet.controllers.commands.PetSpecification;
 import pl.zablocki.petvet.entity.Owner;
 import pl.zablocki.petvet.entity.Pet;
 import pl.zablocki.petvet.entity.PetType;
@@ -56,5 +57,9 @@ public class PetService {
 
     public Page<Pet> getAllPets(Pageable pageable) {
         return petRepository.findAll(pageable);
+    }
+
+    public Page<Pet> getAllPets(Pageable pageable, PetSpecification spec) {
+        return petRepository.findAll(spec, pageable);
     }
 }

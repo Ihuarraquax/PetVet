@@ -2,21 +2,68 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>Spring Security Example </title>
+    <title>PetVet </title>
 </head>
 <body>
 <div th:replace="fragments/header"></div>
-<div th:if="${param.error}">
-    Invalid username and password.
+
+
+
+<!-- Material form login -->
+<div class="d-flex justify-content-center">
+    <div class="card">
+
+        <h5 class="card-header green white-text text-center py-4">
+            <strong>Logowanie</strong>
+        </h5>
+
+        <!--Card content-->
+        <div class="card-body px-lg-5 pt-0">
+
+            <!-- Form -->
+            <form th:action="@{/login}" method="post" class="text-center" style="color: #1c7500;">
+
+                <!-- Email -->
+                <div class="md-form">
+                    <input type="email" name="email" id="materialLoginFormEmail" class="form-control">
+                    <label for="materialLoginFormEmail">E-mail</label>
+                </div>
+
+                <!-- Password -->
+                <div class="md-form">
+                    <input type="password" name="password" id="materialLoginFormPassword" class="form-control">
+                    <label for="materialLoginFormPassword">Hasło</label>
+                </div>
+
+
+                <!-- Sign in button -->
+                <button class="btn btn-outline-green btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">
+                    Zaloguj
+                </button>
+
+                <!-- Register -->
+                <p>Jesteś nowy?
+                    <a href="/registration">Zarejestruj się</a>
+                </p>
+
+
+            </form>
+            <!-- Form -->
+
+        </div>
+        <div th:if="${param.error}">
+            <div class="alert alert-danger" >
+                Nieprawidłowa nazwa użytkownika, hasło <br> lub konto nie zostało jeszcze aktywowane
+            </div>
+        </div>
+        <div th:if="${param.logout}">
+            <div class="alert alert-info" style="text-align: center" >
+                Zostałeś wylogowany
+            </div>
+        </div>
+    </div>
+
 </div>
-<div th:if="${param.logout}">
-    You have been logged out.
-</div>
-<form th:action="@{/login}" method="post">
-    <div><label> Email : <input type="text" name="email"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Sign In"/></div>
-</form>
 
 </body>
 </html>

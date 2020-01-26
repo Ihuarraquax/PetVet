@@ -1,37 +1,46 @@
 package pl.zablocki.petvet.controllers;
 
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.zablocki.petvet.entity.Examination;
 import pl.zablocki.petvet.entity.Owner;
+import pl.zablocki.petvet.entity.User;
 import pl.zablocki.petvet.entity.appointments.Appointment;
 import pl.zablocki.petvet.exception.AppointmentNotFoundException;
 import pl.zablocki.petvet.services.AccountService;
 import pl.zablocki.petvet.services.AppointmentService;
-import pl.zablocki.petvet.services.ExaminationService;
+import pl.zablocki.petvet.services.EmailSenderService;
 
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.Optional;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 
 @RequestMapping(path = "/appointment")
 @Controller
 public class AppointmentController {
 
+    private final EmailSenderService emailSenderService;
     private final AccountService accountService;
     private final AppointmentService appointmentService;
 
-    public AppointmentController(AccountService accountService, AppointmentService appointmentService) {
+    public AppointmentController(EmailSenderService emailSenderService, AccountService accountService, AppointmentService appointmentService) {
+        this.emailSenderService = emailSenderService;
         this.accountService = accountService;
         this.appointmentService = appointmentService;
     }
 
     @GetMapping
-    public String appointmentsHomePage(Model model, @RequestParam(value = "week", defaultValue = "0", required = false) int week ) {
+    public String appointmentsHomePage(Model model, @RequestParam(value = "week", defaultValue = "0", required = false) int week, Principal principal) {
+        Optional<User> userByEmail = accountService.getUserByEmail(principal.getName());
+        model.addAttribute("user", userByEmail.get());
         model.addAttribute("weekSchedule", appointmentService.getWeekSchedule(LocalDate.now(), week));
+
         return "appointment/home";
+
     }
 
     @GetMapping(path = "/add")
@@ -48,6 +57,7 @@ public class AppointmentController {
     public String addAppointment(@ModelAttribute Appointment appointment, Principal principal) {
         Optional<Owner> ownerByEmail = accountService.getOwnerByEmail(principal.getName());
         appointment.setOwner(ownerByEmail.get());
+        appointment.setApproved(false);
         appointmentService.saveAppointment(appointment);
         return "redirect:/appointment";
     }
@@ -67,6 +77,15 @@ public class AppointmentController {
     public String approveAppointment(@PathVariable long id) {
         Appointment appointment = appointmentService.getAppointment(id).get();
         appointment.setApproved(true);
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        simpleMailMessage.setFrom("PetVet");
+        simpleMailMessage.setTo(appointment.getOwner().getUser().getEmail());
+        simpleMailMessage.setSubject("Twoja wizyta została zatwierdzona!");
+        simpleMailMessage.setText(appointment.getOwner().getCredentials() + " twoja wizyta z " + appointment.getPet().getName() + " została zatwierdzona");
+
+        Executor executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> emailSenderService.sendEmail(simpleMailMessage));
+
         appointmentService.saveAppointment(appointment);
         return "redirect:/appointment";
     }

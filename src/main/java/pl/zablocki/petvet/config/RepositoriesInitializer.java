@@ -4,13 +4,11 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import pl.zablocki.petvet.entity.Owner;
-import pl.zablocki.petvet.entity.Pet;
-import pl.zablocki.petvet.entity.PetType;
-import pl.zablocki.petvet.entity.Vet;
+import pl.zablocki.petvet.entity.*;
 import pl.zablocki.petvet.entity.appointments.Appointment;
 import pl.zablocki.petvet.model.Credentials;
 import pl.zablocki.petvet.repository.AppointmentRepository;
+import pl.zablocki.petvet.repository.ExaminationRepository;
 import pl.zablocki.petvet.repository.PetTypeRepository;
 import pl.zablocki.petvet.services.AccountService;
 import pl.zablocki.petvet.services.PetService;
@@ -26,17 +24,21 @@ public class RepositoriesInitializer {
     private final PetService petService;
     private final AccountService accountService;
     private final AppointmentRepository appointmentRepository;
+    private final ExaminationRepository examinationRepository;
     private final PasswordEncoder passwordEncoder;
     Pet fiflak;
     Pet kitler;
     Owner zablo;
     Vet vet;
+    private Appointment appointment2;
+    private Appointment appointment;
 
-    public RepositoriesInitializer(PetTypeRepository petTypeRepository, PetService petService, AccountService accountService, AppointmentRepository appointmentRepository, PasswordEncoder passwordEncoder) {
+    public RepositoriesInitializer(PetTypeRepository petTypeRepository, PetService petService, AccountService accountService, AppointmentRepository appointmentRepository, ExaminationRepository examinationRepository, PasswordEncoder passwordEncoder) {
         this.petTypeRepository = petTypeRepository;
         this.petService = petService;
         this.accountService = accountService;
         this.appointmentRepository = appointmentRepository;
+        this.examinationRepository = examinationRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -100,7 +102,7 @@ public class RepositoriesInitializer {
             }
 
             if(appointmentRepository.findAll().isEmpty()){
-                Appointment appointment = new Appointment();
+                appointment = new Appointment();
                 appointment.setOwner(zablo);
                 appointment.setApproved(false);
                 appointment.setStartDate(LocalDateTime.now().withHour(8).withMinute(0));
@@ -110,7 +112,7 @@ public class RepositoriesInitializer {
                 appointment.setSymptomsDescription("umiera");
                 appointmentRepository.save(appointment);
 
-                Appointment appointment2 = new Appointment();
+                appointment2 = new Appointment();
                 appointment2.setOwner(zablo);
                 appointment2.setApproved(false);
                 appointment2.setStartDate(LocalDateTime.now().plusDays(1).withHour(14).withMinute(0));
@@ -120,6 +122,31 @@ public class RepositoriesInitializer {
                 appointment2.setSymptomsDescription("zdycha");
 
                 appointmentRepository.save(appointment2);
+            }
+
+            if(examinationRepository.findAll().isEmpty()){
+                Examination examination = new Examination();
+                examination.setOwner(zablo);
+                examination.setPet(fiflak);
+                examination.setVet(vet);
+                examination.setDate(appointment.getStartDate());
+                examination.setDiagnosis("diagn");
+                examination.setPrescription("presc");
+                examination.setResults("result");
+                examination.setExaminationType(ExaminationType.Surgery);
+
+                Examination examination2 = new Examination();
+                examination2.setOwner(zablo);
+                examination2.setPet(kitler);
+                examination2.setVet(vet);
+                examination2.setDate(appointment2.getStartDate());
+                examination2.setDiagnosis("diag2");
+                examination2.setPrescription("presc2");
+                examination2.setResults("result2");
+                examination2.setExaminationType(ExaminationType.Preventive);
+
+                examinationRepository.save(examination);
+                examinationRepository.save(examination2);
             }
         };
     }

@@ -49,7 +49,7 @@ public class AccountService {
     public void updateUser(UserDto userDto) {
         User user = getUserByEmail(userDto.getEmail()).get();
 
-        user.setPassword(userDto.getPassword());
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         userRepository.save(user);
     }
 
@@ -121,7 +121,7 @@ public class AccountService {
         return Optional.empty();
     }
 
-    public void createOwnerAccount(String email, String password) {
+    public Owner createOwnerAccount(String email, String password) {
         Authority authority = new Authority();
         authority.setAuthority("ROLE_USER");
         authority.setEmail(email);
@@ -130,16 +130,39 @@ public class AccountService {
         User user = new User();
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(password));
-        user.setEnabled(true);
         User savedUser = userRepository.save(user);
 
         Owner owner = new Owner(savedUser, null);
-        ownerRepository.save(owner);
+        return ownerRepository.save(owner);
 
     }
 
     public List<Vet> getAllVets() {
         return vetRepository.findAll();
+    }
+
+    public UserDto getActiveUserDto(String email) {
+        User user = null;
+
+        if(isOwner(email)){
+            Owner owner = getOwnerByEmail(email).get();
+            user = owner.getUser();
+        } else if(isVet(email)){
+            Vet vet = getVetByEmail(email).get();
+            user = vet.getUser();
+        }
+        return convertToDto(user);
+    }
+
+
+    public boolean isOwner(String email) {
+        Optional<Owner> ownerByEmail = getOwnerByEmail(email);
+        return ownerByEmail.isPresent();
+    }
+
+    public boolean isVet(String email) {
+        Optional<Vet> vetByEmail = getVetByEmail(email);
+        return vetByEmail.isPresent();
     }
 }
 

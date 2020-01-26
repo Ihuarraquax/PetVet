@@ -11,7 +11,7 @@
     <table class="table">
         <thead class="black white-text">
         <tr>
-            <th></th>
+            <th><a th:href="@{/appointment(week=-1)}">poprzedni </a><a th:href="@{/appointment(week=1)}">następny </a></th>
             <th>Poniedziałek <span th:text="${weekSchedule.monday}"></span></th>
             <th>Wtorek <span th:text="${weekSchedule.tuesday}"></span></th>
             <th>Środa <span th:text="${weekSchedule.wednesday}"></span></th>
@@ -24,34 +24,92 @@
             <td th:text="${#temporals.hour(appointmentHour.getHourStart())} + ':00-' + ${#temporals.hour(appointmentHour.getHourEnd())}+':00'"></td>
 
             <td>
-                <a th:href="@{/appointment/{id}(id = ${appointmentHour.getMonday()?.getId()})}">
-                    <span th:text="${appointmentHour.getMonday()?.getId()}"></span>
-                </a>
+                <div th:if="${appointmentHour.monday != null}">
+                    <a th:if="${appointmentHour.monday.owner.user.email == user.email}"
+                       th:href="@{/appointment/{id}(id = ${appointmentHour.monday?.getId()})}">
+                        <span th:class="${appointmentHour.monday.isApproved() == true ? 'btn btn-primary' : 'btn btn-light'}"
+                              th:text="${appointmentHour.monday?.getId()}"></span>
+                    </a>
+                    <a th:unless="${appointmentHour.monday.owner.user.email == user.email}"
+                       th:href="@{/appointment/{id}(id = ${appointmentHour.monday?.getId()})}">
+                        <span th:class="${appointmentHour.monday.vet.user.email == user.email and appointmentHour.monday.isApproved() ? 'btn btn-secondary' : 'btn btn-light'}"
+                              th:text="${appointmentHour.monday?.getId()}"></span>
+                    </a>
+                </div>
             </td>
             <td>
-                <a th:href="@{/appointment/{id}(id = ${appointmentHour.getTuesday()?.getId()})}">
-                    <span th:text="${appointmentHour.getTuesday()?.getId()}"></span>
-                </a>
+                <div th:if="${appointmentHour.tuesday != null}">
+                    <a th:if="${appointmentHour.tuesday.owner.user.email == user.email}"
+                       th:href="@{/appointment/{id}(id = ${appointmentHour.tuesday?.getId()})}">
+                        <span th:class="${appointmentHour.tuesday.isApproved() == true ? 'btn btn-primary' : 'btn btn-light'}"
+                              th:text="${appointmentHour.tuesday?.getId()}"></span>
+                    </a>
+                    <a th:unless="${appointmentHour.tuesday.owner.user.email == user.email}"
+                       th:href="@{/appointment/{id}(id = ${appointmentHour.tuesday?.getId()})}">
+                        <span th:class="${appointmentHour.tuesday.vet.user.email == user.email and appointmentHour.tuesday.isApproved() ? 'btn btn-secondary' : 'btn btn-light'}"
+                              th:text="${appointmentHour.tuesday?.getId()}"></span>
+                    </a>
+                </div>
             </td>
             <td>
-                <a th:href="@{/appointment/{id}(id = ${appointmentHour.getWednesday()?.getId()})}">
-                    <span th:text="${appointmentHour.getWednesday()?.getId()}"></span>
-                </a>
+                <div th:if="${appointmentHour.wednesday != null}">
+                    <a th:if="${appointmentHour.wednesday.owner.user.email == user.email}"
+                       th:href="@{/appointment/{id}(id = ${appointmentHour.wednesday?.getId()})}">
+                        <span th:class="${appointmentHour.wednesday.isApproved() == true ? 'btn btn-primary' : 'btn btn-light'}"
+                              th:text="${appointmentHour.wednesday?.getId()}"></span>
+                    </a>
+                    <a th:unless="${appointmentHour.wednesday.owner.user.email == user.email}"
+                       th:href="@{/appointment/{id}(id = ${appointmentHour.wednesday?.getId()})}">
+                        <span th:class="${appointmentHour.wednesday.vet.user.email == user.email and appointmentHour.wednesday.isApproved() ? 'btn btn-secondary' : 'btn btn-light'}"
+                              th:text="${appointmentHour.wednesday?.getId()}"></span>
+                    </a>
+                </div>
             </td>
             <td>
-                <a th:href="@{/appointment/{id}(id = ${appointmentHour.getThursday()?.getId()})}">
-                    <span th:text="${appointmentHour.getThursday()?.getId()}"></span>
-                </a>
+                <div th:if="${appointmentHour.thursday != null}">
+
+                    <a th:if="${appointmentHour.thursday.owner.user.email == user.email}"
+                       th:href="@{/appointment/{id}(id = ${appointmentHour.thursday?.getId()})}">
+                        <span th:class="${appointmentHour.thursday.isApproved() == true ? 'btn btn-primary' : 'btn btn-light'}"
+                              th:text="${appointmentHour.thursday?.getId()}"></span>
+                    </a>
+                    <a th:unless="${appointmentHour.thursday.owner.user.email == user.email}"
+                       th:href="@{/appointment/{id}(id = ${appointmentHour.thursday?.getId()})}">
+                        <span th:class="${appointmentHour.thursday.vet.user.email == user.email and appointmentHour.thursday.isApproved() ? 'btn btn-secondary' : 'btn btn-light'}"
+                              th:text="${appointmentHour.thursday?.getId()}"></span>
+                    </a>
+                </div>
             </td>
             <td>
-                <a th:href="@{/appointment/{id}(id = ${appointmentHour.getFriday()?.getId()})}">
-                    <span th:text="${appointmentHour.getFriday()?.getId()}"></span>
-                </a>
+                <div th:if="${appointmentHour.friday != null}">
+
+                    <a th:if="${appointmentHour.friday.owner.user.email == user.email}"
+                       th:href="@{/appointment/{id}(id = ${appointmentHour.friday?.getId()})}">
+                        <span th:class="${appointmentHour.friday.isApproved() == true ? 'btn btn-primary' : 'btn btn-light'}"
+                              th:text="${appointmentHour.friday?.getId()}"></span>
+                    </a>
+                    <a th:unless="${appointmentHour.friday.owner.user.email == user.email}"
+                       th:href="@{/appointment/{id}(id = ${appointmentHour.friday?.getId()})}">
+                        <span th:class="${appointmentHour.friday.vet.user.email == user.email and appointmentHour.friday.isApproved() ? 'btn btn-secondary' : 'btn btn-light'}"
+                              th:text="${appointmentHour.friday?.getId()}"></span>
+                    </a>
+                </div>
             </td>
             <td>
-                <a th:href="@{/appointment/{id}(id = ${appointmentHour.getSaturday()?.getId()})}">
-                    <span th:text="${appointmentHour.getSaturday()?.getId()}"></span>
-                </a>
+                <div th:if="${appointmentHour.getSaturday() != null}">
+
+                    <a th:if="${appointmentHour.saturday.owner.user.email == user.email}"
+                       th:href="@{/appointment/{id}(id = ${appointmentHour.saturday?.getId()})}">
+                        <span th:class="${appointmentHour.saturday.isApproved() == true ? 'btn btn-primary' : 'btn btn-light'}"
+                              th:text="${appointmentHour.saturday?.getId()}"></span>
+                    </a>
+                    <a th:unless="${appointmentHour.saturday.owner.user.email == user.email}"
+                       th:href="@{/appointment/{id}(id = ${appointmentHour.saturday?.getId()})}">
+                        <span th:class="${appointmentHour.saturday.vet.user.email == user.email and appointmentHour.saturday.isApproved() ? 'btn btn-secondary' : 'btn btn-light'}"
+                              th:text="${appointmentHour.saturday?.getId()}"></span>
+                    </a>
+
+                </div>
             </td>
 
         </tr>

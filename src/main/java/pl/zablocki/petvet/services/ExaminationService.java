@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.zablocki.petvet.entity.Examination;
+import pl.zablocki.petvet.entity.Owner;
 import pl.zablocki.petvet.repository.ExaminationRepository;
 
 import java.util.Optional;
@@ -28,5 +29,9 @@ public class ExaminationService {
 
     public Optional<Examination> findExaminationById(long id) {
         return examinationRepository.findById(id);
+    }
+
+    public Page<Examination> findAllByOwner(Owner owner, Pageable pageable) {
+        return examinationRepository.findAllByOwner(owner, pageable);
     }
 }

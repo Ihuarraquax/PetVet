@@ -6,11 +6,15 @@
     <title>PetVet - Strona główna</title>
 
 </head>
-<body>
 <div th:replace="fragments/header"></div>
 
 <h1>Strona ze zwierzętami!</h1>
 
+
+<form method="get">
+    <input class="form-control" style="max-width: 300px" type="text" placeholder="Szukana fraza" aria-label="Search" name="phrase"/>
+    <button type="submit" value="Szukaj">Szukaj</button>
+</form>
 <table class="table table-striped">
     <thead>
     <tr>

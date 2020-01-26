@@ -12,12 +12,22 @@ public class Examination {
     @ManyToOne
     private Pet pet;
     @ManyToOne
+    private Owner owner;
+    @ManyToOne
     private Vet vet;
     private ExaminationType examinationType;
     private String diagnosis;
     private String prescription;
     private String results;
     private LocalDateTime date;
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
+    }
 
     public LocalDateTime getDate() {
         return date;

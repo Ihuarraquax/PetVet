@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import pl.zablocki.petvet.controllers.commands.PetSpecification;
 import pl.zablocki.petvet.entity.Pet;
 import pl.zablocki.petvet.entity.PetType;
 import pl.zablocki.petvet.services.PetService;
@@ -35,13 +36,15 @@ public class PetsController {
     }
 
     @GetMapping()
-    public String showMyPetsList(Model model,Pageable pageable, Principal principal) {
+    public String showMyPetsList(Model model,Pageable pageable, Principal principal, @RequestParam(required = false, name = "phrase", defaultValue = "") String phrase) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Set<String> roles = authentication.getAuthorities().stream()
                 .map(r -> r.getAuthority()).collect(Collectors.toSet());
 
         if (roles.contains("ROLE_VET")) {
-            model.addAttribute("pets", petService.getAllPets(pageable));
+            PetSpecification spec = new PetSpecification(phrase);
+
+            model.addAttribute("pets", petService.getAllPets(pageable,spec));
         }
         else{
             model.addAttribute("pets", petService.getOwnerPets(principal.getName(),pageable));

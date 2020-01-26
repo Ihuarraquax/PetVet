@@ -16,7 +16,7 @@
 
 
 <div th:if="${#authentication.getName() eq appointment.getVet().getUser().getEmail() }">
-    <a th:href="@{/appointments/approve/{id}(id = ${appointment.getId()})}">zatwiedz</a>
+    <a th:href="@{/appointment/approve/{id}(id = ${appointment.getId()})}">zatwiedz</a>
     <br>
     <a th:href="@{/examination/start/{id}/(id = ${appointment.getId()})}">Rozpocznij wizyte</a>
 </div>

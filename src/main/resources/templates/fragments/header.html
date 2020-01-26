@@ -12,32 +12,23 @@
 <div th:fragment="header">
     <header>
         <nav class="navbar fixed-top navbar-expand-lg navbar-dark green scrolling-navbar">
-            <a class="navbar-brand" href="#"><strong>PetVet</strong></a>
+            <a class="navbar-brand" href="/"><strong>PetVet</strong></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/">Strona główna<span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Cennik</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Kontakt</a>
-                    </li>
                 </ul>
 
                 <ul class="nav navbar-nav nav-flex-icons ml-auto">
                     <div sec:authorize="hasAuthority('ROLE_USER')">
                         <a class="nav-link" href="/pets">Moje zwierzęta</a>
+                        <a class="nav-link" href="/examination/my">Wyniki badań</a>
                         <a class="nav-link" href="/appointment">Wizyty</a>
                     </div>
                     <div sec:authorize="hasAuthority('ROLE_VET')">
-                        <a class="nav-link" href="/pets/all">Baza zwierząt</a>
+                        <a class="nav-link" href="/pets">Baza zwierząt</a>
                         <a class="nav-link" href="/examination/all">Baza badań</a>
                         <a class="nav-link" href="/appointment">Wizyty</a>
                     </div>
