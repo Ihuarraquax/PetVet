@@ -4,6 +4,6 @@ public class SearchCriteria {
     String phrase;
 
     public SearchCriteria(String phrase) {
-        this.phrase = phrase;
+        this.phrase = "%"+phrase+"%";
     }
 }

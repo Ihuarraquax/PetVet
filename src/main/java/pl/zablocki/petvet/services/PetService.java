@@ -1,7 +1,9 @@
 package pl.zablocki.petvet.services;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Service;
 import pl.zablocki.petvet.controllers.commands.PetSpecification;
 import pl.zablocki.petvet.entity.Owner;
@@ -12,6 +14,7 @@ import pl.zablocki.petvet.repository.PetTypeRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PetService {
@@ -42,9 +45,10 @@ public class PetService {
         petRepository.saveAndFlush(pet);
     }
 
-    public Page<Pet> getOwnerPets(String email, Pageable pageable) {
+    public Page<Pet> getOwnerPets(String email, Pageable pageable, PetSpecification spec) {
         Owner owner = accountService.getOwnerByEmail(email).get();
-        return petRepository.findAllByOwner(owner, pageable);
+        Page<Pet> all = petRepository.findAll(spec, pageable);
+        return new PageImpl<>(all.stream().filter(pet -> pet.getOwner().getId() == owner.getId()).collect(Collectors.toList()));
     }
 
     public List<Pet> findAll() {
@@ -61,5 +65,10 @@ public class PetService {
 
     public Page<Pet> getAllPets(Pageable pageable, PetSpecification spec) {
         return petRepository.findAll(spec, pageable);
+    }
+
+    public void deletePet(Pet pet) {
+        pet.setOwner(null);
+        petRepository.save(pet);
     }
 }

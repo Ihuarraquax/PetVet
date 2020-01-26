@@ -13,7 +13,7 @@
 
 <form method="get">
     <input class="form-control" style="max-width: 300px" type="text" placeholder="Szukana fraza" aria-label="Search" name="phrase"/>
-    <button type="submit" value="Szukaj">Szukaj</button>
+    <button class="btn btn-primary" type="submit" value="Szukaj">Szukaj</button>
 </form>
 <table class="table table-striped">
     <thead>
@@ -48,11 +48,14 @@
         </td>
         <td>
 
-            <img class="photo" th:if="${pet.image} != null" th:src="'/photos/' + *{pet.image}" alt="photo">
+            <img class="photo" th:if="${pet.image} != null" th:src="@{'/photos/' + ${pet.image}}" alt="photo">
         </td>
         <td>
             <a th:href="@{/pets/form(id=*{pet.id})}">
                 <img class="click-icon" th:src="@{/images/edit-flat.png}" alt="edit-icon">
+            </a>
+            <a th:href="@{/pets/delete(id=*{pet.id})}">
+                <img class="click-icon" th:src="@{/images/delete-flat.png}" alt="delete-icon">
             </a>
         </td>
 
@@ -62,10 +65,10 @@
     </tbody>
 </table>
 <div th:replace="fragments/pagination :: pager('/pets',${pets})"/>
+<br>
 <div sec:authorize="hasRole('ROLE_USER')">
-    <a href="/pets/form">Dodaj pupila</a>
+    <a class="btn btn-primary" href="/pets/form">Dodaj pupila</a>
 </div>
-
 
 </body>
 </html>

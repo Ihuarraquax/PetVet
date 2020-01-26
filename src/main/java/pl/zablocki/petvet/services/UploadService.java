@@ -16,7 +16,7 @@ public class UploadService {
     private final String FOLDER;
 
     public UploadService() {
-        this.FOLDER = Paths.get("").toAbsolutePath().toString() + "/src/main/resources/static/photos/";
+        this.FOLDER = "C:\\Users\\Hubii\\Desktop\\Platformy Oprogramowania\\petvet\\images\\";
     }
 
     public String saveImage(MultipartFile imageFile) {

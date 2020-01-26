@@ -40,14 +40,12 @@ public class PetsController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Set<String> roles = authentication.getAuthorities().stream()
                 .map(r -> r.getAuthority()).collect(Collectors.toSet());
-
+        PetSpecification spec = new PetSpecification(phrase);
         if (roles.contains("ROLE_VET")) {
-            PetSpecification spec = new PetSpecification(phrase);
-
             model.addAttribute("pets", petService.getAllPets(pageable,spec));
         }
         else{
-            model.addAttribute("pets", petService.getOwnerPets(principal.getName(),pageable));
+            model.addAttribute("pets", petService.getOwnerPets(principal.getName(),pageable,spec));
         }
         return "pets";
     }
@@ -73,6 +71,13 @@ public class PetsController {
                 "pet",
                 id.isPresent() ? petService.getPet(id.get()).get() : new Pet());
         return "petForm";
+    }
+
+    @GetMapping("delete")
+    public String deletePet(Pet pet) {
+
+        petService.deletePet(pet);
+        return "redirect:/pets";
     }
 
     @ModelAttribute(name = "petTypes")
