@@ -164,6 +164,12 @@ public class AccountService {
         Optional<Vet> vetByEmail = getVetByEmail(email);
         return vetByEmail.isPresent();
     }
+
+    public void enableAccount(String email) {
+        User user = getUserByEmail(email).get();
+        user.setEnabled(true);
+        userRepository.save(user);
+    }
 }
 
 

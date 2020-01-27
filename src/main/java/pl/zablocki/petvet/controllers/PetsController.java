@@ -13,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 import pl.zablocki.petvet.controllers.commands.PetSpecification;
 import pl.zablocki.petvet.entity.Pet;
 import pl.zablocki.petvet.entity.PetType;
+import pl.zablocki.petvet.entity.appointments.Appointment;
+import pl.zablocki.petvet.exception.AppointmentNotFoundException;
 import pl.zablocki.petvet.services.PetService;
 import pl.zablocki.petvet.services.UploadService;
 
@@ -78,6 +80,12 @@ public class PetsController {
 
         petService.deletePet(pet);
         return "redirect:/pets";
+    }
+    @GetMapping(path = "/{id}")
+    public String showAppointment(Model model, @PathVariable("id") Pet pet) {
+
+        model.addAttribute("pet", pet);
+        return "pet/details";
     }
 
     @ModelAttribute(name = "petTypes")

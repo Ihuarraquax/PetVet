@@ -9,8 +9,6 @@
 <body>
 <div th:replace="fragments/header"></div>
 
-<h1>Strona ze zwierzętami!</h1>
-
 <table class="table table-striped">
     <thead>
     <tr>
@@ -31,7 +29,11 @@
             </a>
         </td>
         <td>
-            <span th:text="*{examination.pet.name}"></span>
+            <b >
+                <a th:href="@{/pets/{id}(id=*{examination.pet.id})}">
+                    <span class="text-secondary" style="text-decoration: underline;" th:text="*{examination.pet.name}"></span>
+                </a>
+            </b>
         </td>
         <td>
             <span th:text="*{examination.owner.getCredentials()}"></span>

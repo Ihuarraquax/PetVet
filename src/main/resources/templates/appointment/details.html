@@ -9,16 +9,24 @@
 <div th:replace="fragments/header"></div>
 
 
-<span th:text="${appointment.getOwner().getCredentials()}"></span>
-<span th:text="${appointment.getPet()}"></span>
-<span th:text="${appointment.getSymptomsDescription()}"></span>
-<span th:text="${#temporals.format(appointment.getStartDate())}"></span>
+<div id="main">
+    <H1>Szczegóły wizyty</H1>
+    Wewnętrzny numer wizyty: <b th:text="${appointment.id}"></b><br/>
+    Data: <b th:text="*{#temporals.format(appointment.startDate)}"></b><br/>
+    Pacjent: <a class="text-secondary" th:href="@{/pets/{id}(id=*{appointment.pet.id})}"><b th:text="${appointment.pet.name}"></b></a><br/>
+    Weterynarz: <b th:text="${appointment.vet.credentials}"></b><br/>
+    Symptomy: <b th:text="${appointment.symptomsDescription}"></b><br/>
+    Potwierdzone: <b style="color: darkgreen" th:if="${appointment.isApproved()==true}" th:text="'Zatwierdzone'"></b><b
+        style="color:red;" th:if="${appointment.isApproved()==false}" th:text="'Niezatwierdzone'"></b>
+    <br/>
 
+    <a class="btn btn-success" href="/appointment">Wstecz</a>
+</div>
 
 <div th:if="${#authentication.getName() eq appointment.getVet().getUser().getEmail() }">
-    <a th:href="@{/appointment/approve/{id}(id = ${appointment.getId()})}">zatwiedz</a>
+    <a class="btn btn-success" th:href="@{/appointment/approve/{id}(id = ${appointment.getId()})}">zatwiedz</a>
     <br>
-    <a th:href="@{/examination/start/{id}/(id = ${appointment.getId()})}">Rozpocznij wizyte</a>
+    <a class="" th:href="@{/examination/start/{id}/(id = ${appointment.getId()})}">Rozpocznij wizyte</a>
 </div>
 
 </body>

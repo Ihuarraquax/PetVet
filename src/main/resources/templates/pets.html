@@ -8,11 +8,12 @@
 </head>
 <div th:replace="fragments/header"></div>
 
-<h1>Strona ze zwierzętami!</h1>
+<h1>Moje zwierzęta</h1>
 
 
 <form method="get">
-    <input class="form-control" style="max-width: 300px" type="text" placeholder="Szukana fraza" aria-label="Search" name="phrase"/>
+    <input class="form-control" style="max-width: 300px" type="text" placeholder="Szukana fraza" aria-label="Search"
+           name="phrase"/>
     <button class="btn btn-primary" type="submit" value="Szukaj">Szukaj</button>
 </form>
 <table class="table table-striped">
@@ -30,9 +31,11 @@
     <tbody>
     <tr th:each="pet : ${pets}">
         <td>
-            <a th:href="@{/pets(id=*{pet.id})}">
-                <span th:text="*{pet.name}"></span>
-            </a>
+            <b >
+                <a th:href="@{/pets/{id}(id=*{pet.id})}">
+                    <span class="text-secondary" style="text-decoration: underline;" th:text="*{pet.name}"></span>
+                </a>
+            </b>
         </td>
         <td>
             <span th:text="*{pet.type.name}"></span>

@@ -8,12 +8,14 @@ import pl.zablocki.petvet.entity.Owner;
 import pl.zablocki.petvet.entity.User;
 import pl.zablocki.petvet.entity.appointments.Appointment;
 import pl.zablocki.petvet.exception.AppointmentNotFoundException;
+import pl.zablocki.petvet.exception.InvalidAppointmentDate;
 import pl.zablocki.petvet.services.AccountService;
 import pl.zablocki.petvet.services.AppointmentService;
 import pl.zablocki.petvet.services.EmailSenderService;
 
 import java.security.Principal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -54,12 +56,30 @@ public class AppointmentController {
     }
 
     @PostMapping(path = "/add")
-    public String addAppointment(@ModelAttribute Appointment appointment, Principal principal) {
+    public String addAppointment(@ModelAttribute Appointment appointment, Principal principal) throws InvalidAppointmentDate {
+        appointment.setStartDate(appointment.getStartDate().withMinute(0).withSecond(0));
+        validAppointmentDate(appointment.getStartDate());
         Optional<Owner> ownerByEmail = accountService.getOwnerByEmail(principal.getName());
         appointment.setOwner(ownerByEmail.get());
         appointment.setApproved(false);
+
         appointmentService.saveAppointment(appointment);
         return "redirect:/appointment";
+    }
+
+    private void validAppointmentDate(LocalDateTime startDate) throws InvalidAppointmentDate {
+        if (startDate.getDayOfWeek().getValue()==7) {
+            throw new InvalidAppointmentDate("W niedziele gabinet jest nieczynny, prosze wybrać inną datę.");
+        }
+
+        if(startDate.getHour()>15 || startDate.getHour()<8){
+            throw new InvalidAppointmentDate("Gabinet jest czynny tylko w godzinach 8-16. Proszę wybrać inną godzinę");
+        }
+
+        if(appointmentService.getAppointmentByDate(startDate).isPresent()){
+            throw new InvalidAppointmentDate("Istnieje już inna wizyta zapisana na tą datę");
+        }
+
     }
 
     @GetMapping(path = "/{id}")

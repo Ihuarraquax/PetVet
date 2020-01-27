@@ -7,6 +7,7 @@ import pl.zablocki.petvet.entity.appointments.schedule.WeekScheduler;
 import pl.zablocki.petvet.repository.AppointmentRepository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -53,5 +54,9 @@ public class AppointmentService {
 
         return newEvents;
 
+    }
+
+    public Optional<Appointment> getAppointmentByDate(LocalDateTime startDate) {
+       return appointmentRepository.findOneByStartDateEquals(startDate);
     }
 }

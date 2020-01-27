@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>PetVet - Strona główna</title>
+
+</head>
+<body>
+<div th:replace="fragments/header"></div>
+
+
+<div id="main">
+    <H1 th:text="${pet.name}"></H1>
+    Wewnętrzny numer zwierzaka: <b th:text="${pet.id}"></b><br/>
+    Typ: <b th:text="${pet.type.getName()}"></b><br/>
+    Rasa: <b th:text="${pet.breed}"></b><br/>
+    Płeć: <b th:text="${pet.sex}"></b><br/>
+    Wiek: <b th:text="${pet.age}"></b><br/>
+    Właściciel: <b th:text="${pet.owner.credentials}"></b><br/>
+
+    <img class="photo" th:if="${pet.image} != null" th:src="@{'/photos/' + ${pet.image}}" alt="photo">
+    <br/>
+
+    <a class="btn btn-success" href="/pets">Wstecz</a>
+</div>
+
+</body>
+</html>
